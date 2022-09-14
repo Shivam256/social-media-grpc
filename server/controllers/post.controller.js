@@ -17,11 +17,11 @@ export const viewAllPosts = async (call, callback) => {
     return {
       userID: post.userID,
       content: post.content,
-      like: post.likes,
+      likes: post.likes,
       imageLink: post.imageLink,
       postID: post._id.valueOf(),
       comments: post.comments.map((c) => {
-        console.log(c, 'huuuiuiu');
+        // console.log(c, 'huuuiuiu');
         return {
           commentId: c._id.valueOf(),
           message: c.message,
@@ -46,7 +46,7 @@ export const deletePost = async (call, callback) => {
 
 export const addComment = async (call, callback) => {
   const { message, postId, user } = call.request.comment;
-  console.log(call.request);
+  console.log(call.request, 'dfvdfvdfv');
   //   console.log(postId);
   try {
     const post = await Post.findById(postId);
