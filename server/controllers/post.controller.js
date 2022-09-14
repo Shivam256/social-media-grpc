@@ -20,6 +20,14 @@ export const viewAllPosts = async (call, callback) => {
       like: post.likes,
       imageLink: post.imageLink,
       postID: post._id.valueOf(),
+      comments: post.comments.map((c) => {
+        return {
+          userId: c.userId,
+          commentId: c._id.valueOf(),
+          message: c.message,
+          postId: c.postId?.valueOf(),
+        };
+      }),
     };
   });
   callback(null, { postArray });
