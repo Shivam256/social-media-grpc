@@ -25,18 +25,19 @@ export const login = async (call, callback) => {
       { expiresIn: "100000m" }
     );
     callback(null, {
-      token: token,
       message: "User successfully logged in",
       error: 0,
+      token: token,
+      user: user,
     });
-    return;
+  } else {
+    callback(null, {
+      message: "User with this email does not exist",
+      error: 1,
+      token: "",
+      user: null,
+    });
   }
-
-  callback(null, {
-    token: "",
-    message: "User with this email does not exist",
-    error: 1,
-  });
 };
 
 export const signup = async (call, callback) => {
@@ -67,5 +68,6 @@ export const signup = async (call, callback) => {
     token: token,
     message: "User successfully signed in",
     error: 0,
+    user: user,
   });
 };

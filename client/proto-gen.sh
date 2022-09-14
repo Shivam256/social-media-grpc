@@ -1,0 +1,1 @@
+protoc -I=. src/protos/$1.proto --js_out=import_style=commonjs:. --grpc-web_out=import_style=commonjs,mode=grpcwebtext:.

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 
 //libs
 import { Typography, Box, TextField } from "@mui/material";
@@ -6,6 +6,7 @@ import { useSnackbar } from "notistack";
 
 //hooks
 import useAuth from "../../hooks/useAuth";
+import {useNavigate} from 'react-router-dom';
 
 //styles
 import {
@@ -22,7 +23,8 @@ const Login = () => {
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const { login } = useAuth();
+  const { login, isLoggedIn } = useAuth();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -33,6 +35,12 @@ const Login = () => {
     console.log(data);
     login(data);
   };
+
+  useEffect(()=>{
+    if(isLoggedIn){
+      navigate('/client/home')
+    }
+  },[isLoggedIn])
 
   return (
     <MyPage>

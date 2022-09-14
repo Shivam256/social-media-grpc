@@ -36,13 +36,24 @@ const useAuth = () => {
       const token = response.getToken();
       const error = response.getError();
       const message = response.getMessage();
+      const user = response.getUser();
+
+      console.log(user, "this is user");
 
       if (error != null && error > 0) {
         enqueueSnackbar(message, { variant: "error" });
         return;
       } else {
+        const nuser = {
+          email: user.getEmail(),
+          username: user.getUsername(),
+          id: user.getId(),
+        };
         console.log(token, "token");
         setSession(token);
+        dispatch(registerSuccess({ user: nuser }));
+        navigate('/client/home')
+
       }
     });
   }, []);
@@ -56,13 +67,23 @@ const useAuth = () => {
       const token = response.getToken();
       const error = response.getError();
       const message = response.getMessage();
+      const user = response.getUser();
+
+      console.log(user, "this is user");
 
       if (error != null && error > 0) {
         enqueueSnackbar(message, { variant: "error" });
         return;
       } else {
+        const nuser = {
+          email: user.getEmail(),
+          username: user.getUsername(),
+          id: user.getId(),
+        };
         console.log(token, "token");
         setSession(token);
+        dispatch(loginSuccess({ user: nuser }));
+        navigate('/client/home')
       }
     });
   }, []);
