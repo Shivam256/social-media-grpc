@@ -18,6 +18,8 @@ const Landing = () => {
       <Link to="/signup">signup</Link>
       <br />
       <Link to="/login">login</Link>
+      <br />
+      <Link to="/postSection"> My Feed </Link>
     </div>
   );
 };

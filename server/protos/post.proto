@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+service PostService{
+    rpc createPost(CreatePostRequest) returns (CreatePostResponse);
+    // rpc viewPost(ViewPostRequest) returns (ViewPostResponse);
+    // rpc deletePost(DeletePostRequest) returns (DeletePostResponse);
+    // rpc updatePost(UpdatePostRequest) returns (UpdatePostResponse);
+    // rpc viewAllPosts(ViewAllPostRequest) returns (ViewAllPostResponse);
+}
+
+message PostSchema{
+    string userID = 1;
+    string content = 2;
+    int32 likes = 3;
+    string imageLink = 4;
+}
+
+message CreatePostRequest{
+    PostSchema post = 1;
+}
+
+message CreatePostResponse{
+    string postID = 1;
+    string msg = 2;
+}

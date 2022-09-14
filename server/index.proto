@@ -1,1 +1,2 @@
 import "protos/auth.proto";
+import "protos/post.proto";
