@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 
@@ -18,11 +18,18 @@ const postSchema = new Schema({
     type: Number,
     required: true,
   },
-  comments: {
-    type: String,
-  },
+  comments: [
+    {
+      message: {
+        type: String,
+      },
+      userId: {
+        type: String,
+      },
+    },
+  ],
 });
 
-const Post = mongoose.model("POST", postSchema);
+const Post = mongoose.model('POST', postSchema);
 
 export default Post;

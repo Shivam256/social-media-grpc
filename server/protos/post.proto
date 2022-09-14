@@ -4,6 +4,7 @@ service PostService{
     rpc createPost(CreatePostRequest) returns (CreatePostResponse);
     rpc viewAllPosts(ViewAllPostRequest) returns (ViewAllPostResponse);
     rpc deletePost(DeletePostRequest) returns (DeletePostResponse);
+    rpc addComment(addCommentRequest) returns (addCommentResponse);
     // rpc viewPost(ViewPostRequest) returns (ViewPostResponse);
     // rpc updatePost(UpdatePostRequest) returns (UpdatePostResponse);
 }
@@ -14,6 +15,21 @@ message PostSchema{
     int32 likes = 3;
     string imageLink = 4;
     string postID = 5;
+    repeated commentSchema comments=6;
+}
+
+message commentSchema{
+    string userId=1;
+    string commentId=2;
+    string message=3;
+    string postId=4;
+}
+
+message addCommentRequest{
+    commentSchema comment=1;
+}
+message addCommentResponse{
+    string message=1;
 }
 
 message CreatePostRequest{

@@ -14,6 +14,13 @@ message PostSchema{
     int32 likes = 3;
     string imageLink = 4;
     string postID = 5;
+    repeated commentSchema comments=6;
+}
+
+message commentSchema{
+    string userID=1;
+    string commentId=2;
+    string message=3;
 }
 
 message CreatePostRequest{
