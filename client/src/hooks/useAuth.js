@@ -44,16 +44,23 @@ const useAuth = () => {
         enqueueSnackbar(message, { variant: "error" });
         return;
       } else {
+        const frds = user.getFriendsList();
+        const friends = frds.map((f) => ({
+          email: user.getEmail(),
+          username: user.getUsername(),
+          id: user.getId(),
+        }));
+
         const nuser = {
           email: user.getEmail(),
           username: user.getUsername(),
           id: user.getId(),
+          friends,
         };
         console.log(token, "token");
         setSession(token);
         dispatch(registerSuccess({ user: nuser }));
-        navigate('/client/home')
-
+        navigate("/client/home");
       }
     });
   }, []);
@@ -75,15 +82,23 @@ const useAuth = () => {
         enqueueSnackbar(message, { variant: "error" });
         return;
       } else {
+        const frds = user.getFriendsList();
+        const friends = frds.map((f) => ({
+          email: user.getEmail(),
+          username: user.getUsername(),
+          id: user.getId(),
+        }));
+
         const nuser = {
           email: user.getEmail(),
           username: user.getUsername(),
           id: user.getId(),
+          friends,
         };
         console.log(token, "token");
         setSession(token);
         dispatch(loginSuccess({ user: nuser }));
-        navigate('/client/home')
+        navigate("/client/home");
       }
     });
   }, []);

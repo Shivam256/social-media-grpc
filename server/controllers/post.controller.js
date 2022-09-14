@@ -17,9 +17,17 @@ export const viewAllPosts = async (call, callback) => {
     return {
       userID: post.userID,
       content: post.content,
-      like: post.likes,
+      likes: post.likes,
       imageLink: post.imageLink,
       postID: post._id.valueOf(),
+      comments: post.comments.map((c) => {
+        return {
+          userId: c.userId,
+          commentId: c._id.valueOf(),
+          message: c.message,
+          postId: c.postId?.valueOf(),
+        };
+      }),
     };
   });
   callback(null, { postArray });
@@ -32,16 +40,22 @@ export const deletePost = async (call, callback) => {
 };
 
 export const addComment = async (call, callback) => {
-  const { message, userId, postId } = call.request;
-  const comm = await Post.findById(postId);
-  comm.comments.push({
-    message,
-    userId,
-  });
-  const updatedPost = comm.save();
-  callback(null, {
-    message: 'comment added successfully!',
-  });
+  const { message, userId, postId } = call.request.comment;
+  console.log(call.request);
+  console.log(postId);
+  try {
+    const post = await Post.findById(postId);
+    post?.comments.push({
+      message,
+      userId,
+    });
+    const updatedPost = post.save();
+    callback(null, {
+      message: 'comment added successfully!',
+    });
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 export const addLike = async (call, callback) => {

@@ -7,6 +7,7 @@ export const getUserInfo = async (call, callback) => {
     const { userid } = call.request;
 
     const user = await User.findById(userid).populate("friends");
+    console.log(user, "hehehe");
 
     if (!user) throw new Error("The user does not exist!");
 
@@ -41,3 +42,5 @@ export const getUsers = async (call, callback) => {
     });
   }
 };
+
+
