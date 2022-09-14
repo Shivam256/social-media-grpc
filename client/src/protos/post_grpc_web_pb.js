@@ -252,5 +252,66 @@ proto.PostServicePromiseClient.prototype.deletePost =
 };
 
 
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.AddLikeRequest,
+ *   !proto.AddLikeResponse>}
+ */
+const methodDescriptor_PostService_addLike = new grpc.web.MethodDescriptor(
+  '/PostService/addLike',
+  grpc.web.MethodType.UNARY,
+  proto.AddLikeRequest,
+  proto.AddLikeResponse,
+  /**
+   * @param {!proto.AddLikeRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.AddLikeResponse.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.AddLikeRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.RpcError, ?proto.AddLikeResponse)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.AddLikeResponse>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.PostServiceClient.prototype.addLike =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/PostService/addLike',
+      request,
+      metadata || {},
+      methodDescriptor_PostService_addLike,
+      callback);
+};
+
+
+/**
+ * @param {!proto.AddLikeRequest} request The
+ *     request proto
+ * @param {?Object<string, string>=} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.AddLikeResponse>}
+ *     Promise that resolves to the response
+ */
+proto.PostServicePromiseClient.prototype.addLike =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/PostService/addLike',
+      request,
+      metadata || {},
+      methodDescriptor_PostService_addLike);
+};
+
+
 module.exports = proto;
 

@@ -17,7 +17,7 @@ export const viewAllPosts = async(call,callback)=>{
         return{
             userID:post.userID,
             content:post.content,
-            like:post.likes,
+            likes:post.likes,
             imageLink:post.imageLink,
             postID:post._id.valueOf()
         }
@@ -29,4 +29,12 @@ export const deletePost = async(call,callback)=>{
     const id = call.request.postID
     const resp = await Post.findByIdAndDelete(id)
     callback(null,{msg:"POST DELETED"})
+}
+
+export const addLike = async(call,callback)=>{
+    const id = call.request.postID
+    const resp = await Post.findById(id);
+   const prevLikes = resp.likes + 1
+   const incLike = await Post.findByIdAndUpdate(id,{likes:prevLikes})
+    callback(null,{})
 }

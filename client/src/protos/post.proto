@@ -6,6 +6,7 @@ service PostService{
     rpc deletePost(DeletePostRequest) returns (DeletePostResponse);
     // rpc viewPost(ViewPostRequest) returns (ViewPostResponse);
     // rpc updatePost(UpdatePostRequest) returns (UpdatePostResponse);
+    rpc addLike(AddLikeRequest) returns (AddLikeResponse);
 }
 
 message PostSchema{
@@ -38,3 +39,9 @@ message DeletePostRequest{
 message DeletePostResponse{
     string msg = 1;
 }
+
+message AddLikeRequest{
+    string postID = 1;
+}
+
+message AddLikeResponse{}
