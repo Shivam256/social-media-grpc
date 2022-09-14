@@ -24,6 +24,8 @@ import {
   commentSchema,
   userDetails,
 } from '../../protos/post_pb';
+
+import CommentCard from './commentCard.component';
 const client = new PostServiceClient('http://localhost:9090', null, null);
 
 const PostCard = ({ post, setPostAdded, postAdded, userID }) => {
@@ -93,16 +95,13 @@ const PostCard = ({ post, setPostAdded, postAdded, userID }) => {
     comData.setComment(com);
 
     if (isLoggedIn) {
-      console.log('heloo here');
       client.addComment(comData, {}, (err, response) => {
         if (err) console.log(err);
         else {
-          console.log(response.toObject());
           enqueueSnackbar(response.toObject().message, { variant: 'success' });
+          setPostAdded(!postAdded);
         }
       });
-
-      setPostAdded(!postAdded);
     } else {
       navigate('/login');
       enqueueSnackbar('Please Login', { variant: 'warning' });
@@ -144,6 +143,22 @@ const PostCard = ({ post, setPostAdded, postAdded, userID }) => {
             >
               comment
             </Button>
+          </Box>
+          <Box
+            sx={{
+              width: '100%',
+              height: '30vh',
+              overflowY: 'scroll',
+              marginTop: '2rem',
+            }}
+          >
+            {post?.commentsList && (
+              <Box>
+                {post?.commentsList.map((c) => (
+                  <CommentCard username={c.user.username} message={c.message} />
+                ))}
+              </Box>
+            )}
           </Box>
         </Box>
       </Modal>
