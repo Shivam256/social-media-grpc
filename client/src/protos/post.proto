@@ -19,8 +19,14 @@ message PostSchema{
     repeated commentSchema comments=6;
 }
 
+message userDetails{
+    string id=3;
+    string email=1;
+    string username=2;
+}
+
 message commentSchema{
-    string userId=1;
+    userDetails user=1;
     string commentId=2;
     string message=3;
     string postId=4;
