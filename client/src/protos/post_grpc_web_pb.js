@@ -130,5 +130,66 @@ proto.PostServicePromiseClient.prototype.createPost =
 };
 
 
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.ViewAllPostRequest,
+ *   !proto.ViewAllPostResponse>}
+ */
+const methodDescriptor_PostService_viewAllPosts = new grpc.web.MethodDescriptor(
+  '/PostService/viewAllPosts',
+  grpc.web.MethodType.UNARY,
+  proto.ViewAllPostRequest,
+  proto.ViewAllPostResponse,
+  /**
+   * @param {!proto.ViewAllPostRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.ViewAllPostResponse.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.ViewAllPostRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.RpcError, ?proto.ViewAllPostResponse)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.ViewAllPostResponse>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.PostServiceClient.prototype.viewAllPosts =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/PostService/viewAllPosts',
+      request,
+      metadata || {},
+      methodDescriptor_PostService_viewAllPosts,
+      callback);
+};
+
+
+/**
+ * @param {!proto.ViewAllPostRequest} request The
+ *     request proto
+ * @param {?Object<string, string>=} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.ViewAllPostResponse>}
+ *     Promise that resolves to the response
+ */
+proto.PostServicePromiseClient.prototype.viewAllPosts =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/PostService/viewAllPosts',
+      request,
+      metadata || {},
+      methodDescriptor_PostService_viewAllPosts);
+};
+
+
 module.exports = proto;
 

@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -7,7 +7,7 @@ import { useSnackbar } from "notistack";
 
 
 import {PostServiceClient} from '../../protos/post_grpc_web_pb'
-import {CreatePostRequest,CreatePostResponse,PostSchema} from '../../protos/post_pb'
+import {CreatePostRequest,CreatePostResponse,PostSchema,ViewAllPostRequest,ViewAllPostResponse} from '../../protos/post_pb'
 
 const client = new PostServiceClient(
     "http://localhost:9090",
@@ -19,6 +19,7 @@ const client = new PostServiceClient(
 const PostComponent = () => {
 
     const [pdata,setPdata] = useState()
+    const [postArr,setPostArr] = useState()
     const { enqueueSnackbar } = useSnackbar();
 
     const handleChange = (e)=>{
@@ -46,6 +47,18 @@ const PostComponent = () => {
 
     }
 
+    const getAllPosts = ()=>{
+      const viewData = new ViewAllPostRequest()
+      client.viewAllPosts(viewData,null,(err,res)=>{
+        setPostArr(res.toObject().postarrayList)
+    })
+    }
+
+    useEffect(() => {
+      getAllPosts()
+    }, [])
+    
+
   return (
     <>
       <Typography sx={{mt: 5, }} variant="h4" align="center" fontWeight={"bold"} gutterBottom>
@@ -57,6 +70,21 @@ const PostComponent = () => {
       <TextField sx={{width: 500,m: 1, }} onChange={(e)=>handleChange(e)} name="imageLink" id="outlined-basic" label="Enter Image Link" variant="outlined" />
       <Button sx={{width: 200,p: 1,m: 1, }} onClick={()=>createNewPost()} variant="contained">Create A Post</Button>
       </Box>
+
+      <Box sx={{m: 5, }} >
+        {
+          postArr?.map((post)=>{
+            return(
+              <>
+              <Box sx={{m: 2, }}>
+                {post.content}
+              </Box>
+              </>
+            )
+          })
+        }
+      </Box>
+
     </>
   );
 };

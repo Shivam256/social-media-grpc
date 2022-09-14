@@ -11,5 +11,6 @@ export const createPost = async(call,callback)=>{
 
 export const viewAllPosts = async(call,callback)=>{
     const resp = await Post.find({});
-    console.log(resp)
+    // console.log(resp)
+    callback(null,{postArray:resp})
 }
