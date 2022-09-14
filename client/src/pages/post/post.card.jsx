@@ -5,9 +5,34 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-const PostCard = ({post}) => {
-    console.log(post)
+
+import {PostServiceClient} from '../../protos/post_grpc_web_pb'
+import {DeletePostRequest,PostSchema} from '../../protos/post_pb'
+
+const client = new PostServiceClient(
+    "http://localhost:9090",
+    null,
+    null
+  );
+
+
+const PostCard = ({post,setPostAdded,postAdded}) => {
+    // console.log(post)
+
+
+    const deletePostHandler = (id)=>{
+      const delData = new DeletePostRequest()
+      console.log(id)
+      delData.setPostid(id);
+      client.deletePost(delData,{},(err,res)=>{
+        console.log(res,err)
+        setPostAdded(!postAdded)
+      })
+    }
+
   return (
+
+    
     <>
     
     <Card sx={{ maxWidth: 345 }}>
@@ -25,7 +50,7 @@ const PostCard = ({post}) => {
       <CardActions>
         <Button variant="contained"  size="small" color="success" >Like ({post.likes})</Button>
         <Button variant="contained"  size="small" color="info" >Comment</Button>
-        <Button  variant="contained" size="small" color="error" >Delete</Button>
+        <Button  variant="contained" size="small" onClick={()=>deletePostHandler(post.postid)} color="error" >Delete</Button>
         <Button variant="contained"  size="small" color="secondary" >Edit</Button>
 
       </CardActions>

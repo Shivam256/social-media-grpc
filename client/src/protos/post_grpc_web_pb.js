@@ -191,5 +191,66 @@ proto.PostServicePromiseClient.prototype.viewAllPosts =
 };
 
 
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.DeletePostRequest,
+ *   !proto.DeletePostResponse>}
+ */
+const methodDescriptor_PostService_deletePost = new grpc.web.MethodDescriptor(
+  '/PostService/deletePost',
+  grpc.web.MethodType.UNARY,
+  proto.DeletePostRequest,
+  proto.DeletePostResponse,
+  /**
+   * @param {!proto.DeletePostRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.DeletePostResponse.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.DeletePostRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.RpcError, ?proto.DeletePostResponse)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.DeletePostResponse>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.PostServiceClient.prototype.deletePost =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/PostService/deletePost',
+      request,
+      metadata || {},
+      methodDescriptor_PostService_deletePost,
+      callback);
+};
+
+
+/**
+ * @param {!proto.DeletePostRequest} request The
+ *     request proto
+ * @param {?Object<string, string>=} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.DeletePostResponse>}
+ *     Promise that resolves to the response
+ */
+proto.PostServicePromiseClient.prototype.deletePost =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/PostService/deletePost',
+      request,
+      metadata || {},
+      methodDescriptor_PostService_deletePost);
+};
+
+
 module.exports = proto;
 

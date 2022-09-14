@@ -12,5 +12,20 @@ export const createPost = async(call,callback)=>{
 export const viewAllPosts = async(call,callback)=>{
     const resp = await Post.find({});
     // console.log(resp)
-    callback(null,{postArray:resp})
+    const postArray = resp.map((post)=>{
+        return{
+            userID:post.userID,
+            content:post.content,
+            like:post.likes,
+            imageLink:post.imageLink,
+            postID:post._id.valueOf()
+        }
+    })
+    callback(null,{postArray})
+}
+
+export const deletePost = async(call,callback)=>{
+    const id = call.request.postID
+    const resp = await Post.findByIdAndDelete(id)
+    callback(null,{msg:"POST DELETED"})
 }

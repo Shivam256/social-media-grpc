@@ -3,8 +3,8 @@ syntax = "proto3";
 service PostService{
     rpc createPost(CreatePostRequest) returns (CreatePostResponse);
     rpc viewAllPosts(ViewAllPostRequest) returns (ViewAllPostResponse);
+    rpc deletePost(DeletePostRequest) returns (DeletePostResponse);
     // rpc viewPost(ViewPostRequest) returns (ViewPostResponse);
-    // rpc deletePost(DeletePostRequest) returns (DeletePostResponse);
     // rpc updatePost(UpdatePostRequest) returns (UpdatePostResponse);
 }
 
@@ -13,6 +13,7 @@ message PostSchema{
     string content = 2;
     int32 likes = 3;
     string imageLink = 4;
+    string postID = 5;
 }
 
 message CreatePostRequest{
@@ -28,4 +29,12 @@ message ViewAllPostRequest{}
 
 message ViewAllPostResponse{
     repeated PostSchema postArray = 1;
+}
+
+message DeletePostRequest{
+    string postID = 1;
+}
+
+message DeletePostResponse{
+    string msg = 1;
 }

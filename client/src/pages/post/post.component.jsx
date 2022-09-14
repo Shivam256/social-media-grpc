@@ -7,7 +7,7 @@ import { useSnackbar } from "notistack";
 import PostCard from "./post.card";
 
 import {PostServiceClient} from '../../protos/post_grpc_web_pb'
-import {CreatePostRequest,CreatePostResponse,PostSchema,ViewAllPostRequest,ViewAllPostResponse} from '../../protos/post_pb'
+import {CreatePostRequest,DeletePostRequest,PostSchema,ViewAllPostRequest,ViewAllPostResponse} from '../../protos/post_pb'
 
 const client = new PostServiceClient(
     "http://localhost:9090",
@@ -53,7 +53,9 @@ const PostComponent = () => {
     const getAllPosts = ()=>{
       const viewData = new ViewAllPostRequest()
       client.viewAllPosts(viewData,null,(err,res)=>{
+        // console.log(res.toObject().postarrayList)
         setPostArr(res.toObject().postarrayList)
+        // console.log(client)
     })
     }
 
@@ -80,7 +82,7 @@ const PostComponent = () => {
             return(
               <>
               <Box sx={{w:1,m: 2, }}>
-              <PostCard post={post} />
+              <PostCard post={post} setPostAdded={setPostAdded} postAdded={postAdded} />
               </Box>
 
               </>

@@ -1,8 +1,9 @@
-import { createPost,viewAllPosts } from "../controllers/post.controller.js";
+import { createPost,viewAllPosts,deletePost } from "../controllers/post.controller.js";
 
 const postService = {
     createPost,
-    viewAllPosts
+    viewAllPosts,
+    deletePost
 };
 
 export default postService;
