@@ -24,7 +24,6 @@ const PostComponent = () => {
   const [postArr, setPostArr] = useState();
   const [postAdded, setPostAdded] = useState(false);
   const navigate = useNavigate();
-
   const { enqueueSnackbar } = useSnackbar();
   const handleChange = (e) => {
     setPdata({ ...pdata, [e.target.name]: e.target.value });
@@ -37,6 +36,7 @@ const PostComponent = () => {
     postData.setImagelink(pdata.imageLink);
     postData.setLikes(1);
     postData.setUserid(user?.id);
+    postData.setPostid('1');
     // console.log(postData)
     const sendPostData = new CreatePostRequest();
     sendPostData.setPost(postData);
