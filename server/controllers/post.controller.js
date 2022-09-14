@@ -8,3 +8,8 @@ export const createPost = async(call,callback)=>{
         msg:"POST CREATED"
     })
 }
+
+export const viewAllPosts = async(call,callback)=>{
+    const resp = await Post.find({});
+    console.log(resp)
+}

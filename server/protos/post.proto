@@ -2,10 +2,10 @@ syntax = "proto3";
 
 service PostService{
     rpc createPost(CreatePostRequest) returns (CreatePostResponse);
+    rpc viewAllPosts(ViewAllPostRequest) returns (ViewAllPostResponse);
     // rpc viewPost(ViewPostRequest) returns (ViewPostResponse);
     // rpc deletePost(DeletePostRequest) returns (DeletePostResponse);
     // rpc updatePost(UpdatePostRequest) returns (UpdatePostResponse);
-    // rpc viewAllPosts(ViewAllPostRequest) returns (ViewAllPostResponse);
 }
 
 message PostSchema{
@@ -22,4 +22,10 @@ message CreatePostRequest{
 message CreatePostResponse{
     string postID = 1;
     string msg = 2;
+}
+
+message ViewAllPostRequest{}
+
+message ViewAllPostResponse{
+    repeated PostSchema postArray = 1;
 }
