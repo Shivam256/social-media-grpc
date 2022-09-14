@@ -17,7 +17,7 @@ export const viewAllPosts = async (call, callback) => {
     return {
       userID: post.userID,
       content: post.content,
-      like: post.likes,
+      likes: post.likes,
       imageLink: post.imageLink,
       postID: post._id.valueOf(),
     };
