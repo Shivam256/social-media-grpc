@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 import {PostServiceClient} from '../../protos/post_grpc_web_pb'
-import {DeletePostRequest,PostSchema} from '../../protos/post_pb'
+import {DeletePostRequest,PostSchema,AddLikeRequest} from '../../protos/post_pb'
 
 const client = new PostServiceClient(
     "http://localhost:9090",
@@ -16,8 +16,8 @@ const client = new PostServiceClient(
   );
 
 
-const PostCard = ({post,setPostAdded,postAdded}) => {
-    // console.log(post)
+const PostCard = ({post,setPostAdded,postAdded,userID}) => {
+    console.log(post)
 
 
     const deletePostHandler = (id)=>{
@@ -28,6 +28,18 @@ const PostCard = ({post,setPostAdded,postAdded}) => {
         console.log(res,err)
         setPostAdded(!postAdded)
       })
+    }
+
+    const incrementLikes = (id)=>{
+        console.log(id)
+        const data = new AddLikeRequest();
+        data.setPostid(id)
+
+        client.addLike(data,{},(err,res)=>{
+            console.log(res)
+        })
+
+        setPostAdded(!postAdded)
     }
 
   return (
@@ -48,11 +60,14 @@ const PostCard = ({post,setPostAdded,postAdded}) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button variant="contained"  size="small" color="success" >Like ({post.likes})</Button>
+        <Button variant="contained"  size="small" onClick={()=>incrementLikes(post.postid)} color="success" >Like ({post.likes})</Button>
         <Button variant="contained"  size="small" color="info" >Comment</Button>
-        <Button  variant="contained" size="small" onClick={()=>deletePostHandler(post.postid)} color="error" >Delete</Button>
-        <Button variant="contained"  size="small" color="secondary" >Edit</Button>
-
+        {
+          post?.userid==userID?<><Button  variant="contained" size="small" onClick={()=>deletePostHandler(post.postid)} color="error" >Delete</Button>
+          <Button variant="contained"  size="small" color="secondary" >Edit</Button>
+  </>:<></>
+        }
+        
       </CardActions>
     </Card>
     </>

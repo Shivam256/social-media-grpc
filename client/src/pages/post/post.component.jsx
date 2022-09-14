@@ -5,7 +5,6 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { useSnackbar } from 'notistack';
 import PostCard from './post.card';
-
 import { PostServiceClient } from '../../protos/post_grpc_web_pb';
 import {
   CreatePostRequest,
@@ -14,18 +13,22 @@ import {
   ViewAllPostRequest,
   ViewAllPostResponse,
 } from '../../protos/post_pb';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const client = new PostServiceClient('http://localhost:9090', null, null);
 
 const PostComponent = () => {
+  const { isLoggedIn, user } = useSelector((state) => state.auth);
   const [pdata, setPdata] = useState();
   const [postArr, setPostArr] = useState();
   const [postAdded, setPostAdded] = useState(false);
-  const { enqueueSnackbar } = useSnackbar();
+  const navigate = useNavigate();
 
+  const { enqueueSnackbar } = useSnackbar();
   const handleChange = (e) => {
     setPdata({ ...pdata, [e.target.name]: e.target.value });
-    console.log(pdata);
+    // console.log(pdata)
   };
 
   const createNewPost = () => {
@@ -33,21 +36,27 @@ const PostComponent = () => {
     postData.setContent(pdata.content);
     postData.setImagelink(pdata.imageLink);
     postData.setLikes(1);
-    postData.setUserid('632174fd5e41272ea6140722');
+    postData.setUserid(user?.id);
     // console.log(postData)
     const sendPostData = new CreatePostRequest();
     sendPostData.setPost(postData);
 
     // console.log(client)
-    client.createPost(sendPostData, {}, (err, response) => {
-      if (err) console.log(err);
-      else {
-        console.log(response.toObject());
-        enqueueSnackbar(response.toObject().msg, { variant: 'success' });
-      }
-    });
 
-    setPostAdded(!postAdded);
+    if (isLoggedIn) {
+      client.createPost(sendPostData, {}, (err, response) => {
+        if (err) console.log(err);
+        else {
+          console.log(response.toObject());
+          enqueueSnackbar(response.toObject().msg, { variant: 'success' });
+        }
+      });
+
+      setPostAdded(!postAdded);
+    } else {
+      navigate('/login');
+      enqueueSnackbar('Please Login', { variant: 'warning' });
+    }
   };
 
   const getAllPosts = () => {
@@ -112,6 +121,7 @@ const PostComponent = () => {
                   post={post}
                   setPostAdded={setPostAdded}
                   postAdded={postAdded}
+                  userID={user?.id}
                 />
               </Box>
             </>
