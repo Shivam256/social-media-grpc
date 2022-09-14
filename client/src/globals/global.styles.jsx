@@ -3,7 +3,8 @@ import { Box, styled, Button, TextField } from "@mui/material";
 export const MyPage = styled(Box)(() => ({
   width: "100vw",
   height: "100vh",
-  padding: "20px",
+  padding: "20px 50px",
+  paddingTop:'60px',
 }));
 
 export const CustomButton = styled(Button)(() => ({

@@ -17,7 +17,7 @@ export const viewAllPosts = async (call, callback) => {
     return {
       userID: post.userID,
       content: post.content,
-      likes: post.likes,
+      like: post.likes,
       imageLink: post.imageLink,
       postID: post._id.valueOf(),
       comments: post.comments.map((c) => {

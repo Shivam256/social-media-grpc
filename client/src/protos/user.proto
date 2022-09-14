@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+service UserService{
+    rpc getUserInfo(UserIdRequest) returns (UserResponse);
+    rpc getUsers(Empty) returns (UsersResponse);
+}
+
+message Empty{
+}
+
+message UserInfo{
+    string id = 1;
+    string email = 2;
+    string username = 3;
+    repeated UserInfo friends = 4;
+}
+
+message UserIdRequest{
+    string userid = 1;
+}
+
+message UserResponse{
+    int32 error = 1;
+    string message = 2;
+    UserInfo user = 3;
+}
+
+message UsersResponse{
+    int32 error = 1;
+    string message = 2;
+    repeated UserInfo users = 3;
+}
