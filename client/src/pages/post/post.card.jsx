@@ -22,6 +22,7 @@ import {
   addCommentRequest,
   addCommentResponse,
   commentSchema,
+  userDetails,
 } from '../../protos/post_pb';
 const client = new PostServiceClient('http://localhost:9090', null, null);
 
@@ -79,16 +80,18 @@ const PostCard = ({ post, setPostAdded, postAdded, userID }) => {
   };
   const addCommentHandler = () => {
     const comData = new addCommentRequest();
-    console.log(comData, 'commentData');
-
+    const userdata = new userDetails();
     const com = new commentSchema();
-    console.log(com, 'commentSchema data');
-    com.setUserid(userID);
+
+    userdata.setId(userID);
+    userdata.setEmail(user.email);
+    userdata.setUsername(user.username);
+    com.setUser(userdata);
     com.setCommentid('1');
     com.setMessage(comment.message);
     com.setPostid(post.postid);
     comData.setComment(com);
-    console.log('here?', isLoggedIn);
+
     if (isLoggedIn) {
       console.log('heloo here');
       client.addComment(comData, {}, (err, response) => {
