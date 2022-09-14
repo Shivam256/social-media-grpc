@@ -7,7 +7,7 @@ const initialState = {
 };
 
 const slice = createSlice({
-  name: "contact",
+  name: "user",
   initialState,
   reducers: {
     getUsersSuccess(state, action) {

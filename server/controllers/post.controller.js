@@ -11,7 +11,7 @@ export const createPost = async (call, callback) => {
 };
 
 export const viewAllPosts = async (call, callback) => {
-  const resp = await Post.find({}).populate('comments.userId');
+  const resp = await Post.find({});
   // console.log(resp)
   const postArray = resp.map((post) => {
     return {

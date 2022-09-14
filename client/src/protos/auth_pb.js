@@ -2,18 +2,17 @@
 /**
  * @fileoverview
  * @enhanceable
- * @suppress {missingRequire} reports error on implicit type usages.
  * @suppress {messageConventions} JS Compiler reports an error if a variable or
  *     field starts with 'MSG_' and isn't a translatable message.
  * @public
  */
 // GENERATED CODE -- DO NOT EDIT!
+
 /* eslint-disable */
-// @ts-nocheck
 
 var jspb = require('google-protobuf');
 var goog = jspb;
-var global = (function() { return this || window || global || self || Function('return this')(); }).call(null);
+var global = Function('return this')();
 
 goog.exportSymbol('proto.LoginRequest', null, global);
 goog.exportSymbol('proto.LoginResponse', null, global);
@@ -31,7 +30,7 @@ goog.exportSymbol('proto.User', null, global);
  * @constructor
  */
 proto.User = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.User.repeatedFields_, null);
 };
 goog.inherits(proto.User, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -126,6 +125,13 @@ if (goog.DEBUG && !COMPILED) {
   proto.LoginResponse.displayName = 'proto.LoginResponse';
 }
 
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.User.repeatedFields_ = [4];
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -159,7 +165,9 @@ proto.User.toObject = function(includeInstance, msg) {
   var f, obj = {
     id: jspb.Message.getFieldWithDefault(msg, 1, ""),
     username: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    email: jspb.Message.getFieldWithDefault(msg, 3, "")
+    email: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    friendsList: jspb.Message.toObjectList(msg.getFriendsList(),
+    proto.User.toObject, includeInstance)
   };
 
   if (includeInstance) {
@@ -207,6 +215,11 @@ proto.User.deserializeBinaryFromReader = function(msg, reader) {
     case 3:
       var value = /** @type {string} */ (reader.readString());
       msg.setEmail(value);
+      break;
+    case 4:
+      var value = new proto.User;
+      reader.readMessage(value,proto.User.deserializeBinaryFromReader);
+      msg.addFriends(value);
       break;
     default:
       reader.skipField();
@@ -256,6 +269,14 @@ proto.User.serializeBinaryToWriter = function(message, writer) {
     writer.writeString(
       3,
       f
+    );
+  }
+  f = message.getFriendsList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      4,
+      f,
+      proto.User.serializeBinaryToWriter
     );
   }
 };
@@ -312,6 +333,44 @@ proto.User.prototype.getEmail = function() {
  */
 proto.User.prototype.setEmail = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * repeated User friends = 4;
+ * @return {!Array<!proto.User>}
+ */
+proto.User.prototype.getFriendsList = function() {
+  return /** @type{!Array<!proto.User>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.User, 4));
+};
+
+
+/**
+ * @param {!Array<!proto.User>} value
+ * @return {!proto.User} returns this
+*/
+proto.User.prototype.setFriendsList = function(value) {
+  return jspb.Message.setRepeatedWrapperField(this, 4, value);
+};
+
+
+/**
+ * @param {!proto.User=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.User}
+ */
+proto.User.prototype.addFriends = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 4, opt_value, proto.User, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.User} returns this
+ */
+proto.User.prototype.clearFriendsList = function() {
+  return this.setFriendsList([]);
 };
 
 
