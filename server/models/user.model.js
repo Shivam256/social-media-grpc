@@ -20,6 +20,23 @@ const UserSchema = new Schema({
   isAdmin: {
     type: Boolean,
   },
+  friends: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  requests: [
+    {
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
+      note: {
+        type: String,
+      },
+    },
+  ],
 });
 
 const User = mongoose.model("USER", UserSchema);
