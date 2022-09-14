@@ -16,8 +16,8 @@ const client = new PostServiceClient(
   );
 
 
-const PostCard = ({post,setPostAdded,postAdded}) => {
-    // console.log(post)
+const PostCard = ({post,setPostAdded,postAdded,userID}) => {
+    console.log(post.userid,userID)
 
 
     const deletePostHandler = (id)=>{
@@ -50,9 +50,12 @@ const PostCard = ({post,setPostAdded,postAdded}) => {
       <CardActions>
         <Button variant="contained"  size="small" color="success" >Like ({post.likes})</Button>
         <Button variant="contained"  size="small" color="info" >Comment</Button>
-        <Button  variant="contained" size="small" onClick={()=>deletePostHandler(post.postid)} color="error" >Delete</Button>
-        <Button variant="contained"  size="small" color="secondary" >Edit</Button>
-
+        {
+          post?.userid==userID?<><Button  variant="contained" size="small" onClick={()=>deletePostHandler(post.postid)} color="error" >Delete</Button>
+          <Button variant="contained"  size="small" color="secondary" >Edit</Button>
+  </>:<></>
+        }
+        
       </CardActions>
     </Card>
     </>

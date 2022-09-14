@@ -1,5 +1,6 @@
 import Post from "../models/post.model.js"
 export const createPost = async(call,callback)=>{
+    // console.log(call.metadata._internal_repr)
     const {userID,content,imageLink,likes} = call.request.post
     const newPost = new Post({userID,content,likes,imageLink})
     const res = await newPost.save();
