@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import TextField from '@mui/material/TextField';
 import { useSnackbar } from "notistack";
-
+import PostCard from "./post.card";
 
 import {PostServiceClient} from '../../protos/post_grpc_web_pb'
 import {CreatePostRequest,CreatePostResponse,PostSchema,ViewAllPostRequest,ViewAllPostResponse} from '../../protos/post_pb'
@@ -20,6 +20,7 @@ const PostComponent = () => {
 
     const [pdata,setPdata] = useState()
     const [postArr,setPostArr] = useState()
+    const [postAdded,setPostAdded] = useState(false)
     const { enqueueSnackbar } = useSnackbar();
 
     const handleChange = (e)=>{
@@ -45,6 +46,8 @@ const PostComponent = () => {
             }
         })
 
+        setPostAdded(!postAdded)
+
     }
 
     const getAllPosts = ()=>{
@@ -56,7 +59,7 @@ const PostComponent = () => {
 
     useEffect(() => {
       getAllPosts()
-    }, [])
+    }, [postAdded])
     
 
   return (
@@ -71,14 +74,15 @@ const PostComponent = () => {
       <Button sx={{width: 200,p: 1,m: 1, }} onClick={()=>createNewPost()} variant="contained">Create A Post</Button>
       </Box>
 
-      <Box sx={{m: 5, }} >
+      <Box sx={{mx: 5,display: 'flex',flexDirection: 'row',flexWrap: 'wrap' }} >
         {
           postArr?.map((post)=>{
             return(
               <>
-              <Box sx={{m: 2, }}>
-                {post.content}
+              <Box sx={{w:1,m: 2, }}>
+              <PostCard post={post} />
               </Box>
+
               </>
             )
           })
