@@ -23,14 +23,14 @@ const UserSchema = new Schema({
   friends: [
     {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: "USER",
     },
   ],
   requests: [
     {
       user: {
         type: Schema.Types.ObjectId,
-        ref: "User",
+        ref: "USER",
       },
       note: {
         type: String,
