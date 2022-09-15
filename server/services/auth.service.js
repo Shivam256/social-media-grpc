@@ -1,7 +1,8 @@
-import { signup, login } from "../controllers/auth.controller.js";
+import { signup, login, initialize } from "../controllers/auth.controller.js";
 
 const authservice = {
   signup,
+  initialize,
   login,
 };
 

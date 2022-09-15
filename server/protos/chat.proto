@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+message EmptyTokenRequest{
+    string token = 1;
+}
+
+message UserData{
+    string id = 1;
+    string name = 2;
+}
+
+message FriendsResponse{
+    int32 error = 1;
+    string message = 2;
+    repeated UserData friends = 3;
+}
+
+service ChatService{
+    rpc getUserFriends(EmptyTokenRequest) returns (FriendsResponse);
+}

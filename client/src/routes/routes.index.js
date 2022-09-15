@@ -59,6 +59,10 @@ export default function Router() {
           path: "explore",
           element: <Explore />,
         },
+        {
+          path: "chat",
+          element: <Chat />,
+        },
       ],
     },
   ]);
@@ -89,3 +93,5 @@ const Profile = Loadable(
 const Explore = Loadable(
   lazy(() => import("../pages/explore/explore.component"))
 );
+
+const Chat = Loadable(lazy(() => import("../pages/chat/chat.component")));

@@ -19,8 +19,13 @@ const Header = () => {
 
   return (
     <HeaderContainer>
-      <div className="logo">Social 2.0</div>
+      <Link to="/client/home">
+        <div className="logo">Social 2.0</div>
+      </Link>
       <div className="section-2">
+        <Link to="/client/chat">
+          <Icon icon="charm:messages" />
+        </Link>
         <Link to="/client/explore">
           <Icon icon="carbon:explore" />
         </Link>
