@@ -11,7 +11,7 @@ export const createPost = async (call, callback) => {
 };
 
 export const viewAllPosts = async (call, callback) => {
-  const resp = await Post.find({});
+  const resp = await Post.find({}).populate('comments.userId');
   // console.log(resp)
   const postArray = resp.map((post) => {
     return {
@@ -21,7 +21,7 @@ export const viewAllPosts = async (call, callback) => {
       imageLink: post.imageLink,
       postID: post._id.valueOf(),
       comments: post.comments.map((c) => {
-        // console.log(c, 'huuuiuiu');
+        console.log(c, 'huuuiuiu');
         return {
           commentId: c._id.valueOf(),
           message: c.message,
