@@ -130,5 +130,127 @@ proto.FriendServicePromiseClient.prototype.addFriend =
 };
 
 
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.RequestId,
+ *   !proto.FriendResponse>}
+ */
+const methodDescriptor_FriendService_rejectFriendRequest = new grpc.web.MethodDescriptor(
+  '/FriendService/rejectFriendRequest',
+  grpc.web.MethodType.UNARY,
+  proto.RequestId,
+  proto.FriendResponse,
+  /**
+   * @param {!proto.RequestId} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.FriendResponse.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.RequestId} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.RpcError, ?proto.FriendResponse)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.FriendResponse>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.FriendServiceClient.prototype.rejectFriendRequest =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/FriendService/rejectFriendRequest',
+      request,
+      metadata || {},
+      methodDescriptor_FriendService_rejectFriendRequest,
+      callback);
+};
+
+
+/**
+ * @param {!proto.RequestId} request The
+ *     request proto
+ * @param {?Object<string, string>=} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.FriendResponse>}
+ *     Promise that resolves to the response
+ */
+proto.FriendServicePromiseClient.prototype.rejectFriendRequest =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/FriendService/rejectFriendRequest',
+      request,
+      metadata || {},
+      methodDescriptor_FriendService_rejectFriendRequest);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.RequestId,
+ *   !proto.FriendResponse>}
+ */
+const methodDescriptor_FriendService_approveFriendRequest = new grpc.web.MethodDescriptor(
+  '/FriendService/approveFriendRequest',
+  grpc.web.MethodType.UNARY,
+  proto.RequestId,
+  proto.FriendResponse,
+  /**
+   * @param {!proto.RequestId} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.FriendResponse.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.RequestId} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.RpcError, ?proto.FriendResponse)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.FriendResponse>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.FriendServiceClient.prototype.approveFriendRequest =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/FriendService/approveFriendRequest',
+      request,
+      metadata || {},
+      methodDescriptor_FriendService_approveFriendRequest,
+      callback);
+};
+
+
+/**
+ * @param {!proto.RequestId} request The
+ *     request proto
+ * @param {?Object<string, string>=} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.FriendResponse>}
+ *     Promise that resolves to the response
+ */
+proto.FriendServicePromiseClient.prototype.approveFriendRequest =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/FriendService/approveFriendRequest',
+      request,
+      metadata || {},
+      methodDescriptor_FriendService_approveFriendRequest);
+};
+
+
 module.exports = proto;
 

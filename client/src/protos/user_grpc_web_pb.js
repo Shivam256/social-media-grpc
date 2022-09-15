@@ -191,5 +191,66 @@ proto.UserServicePromiseClient.prototype.getUsers =
 };
 
 
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.UserIdRequest,
+ *   !proto.FriendRequestResponse>}
+ */
+const methodDescriptor_UserService_getUserFriendRequests = new grpc.web.MethodDescriptor(
+  '/UserService/getUserFriendRequests',
+  grpc.web.MethodType.UNARY,
+  proto.UserIdRequest,
+  proto.FriendRequestResponse,
+  /**
+   * @param {!proto.UserIdRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.FriendRequestResponse.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.UserIdRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.RpcError, ?proto.FriendRequestResponse)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.FriendRequestResponse>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.UserServiceClient.prototype.getUserFriendRequests =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/UserService/getUserFriendRequests',
+      request,
+      metadata || {},
+      methodDescriptor_UserService_getUserFriendRequests,
+      callback);
+};
+
+
+/**
+ * @param {!proto.UserIdRequest} request The
+ *     request proto
+ * @param {?Object<string, string>=} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.FriendRequestResponse>}
+ *     Promise that resolves to the response
+ */
+proto.UserServicePromiseClient.prototype.getUserFriendRequests =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/UserService/getUserFriendRequests',
+      request,
+      metadata || {},
+      methodDescriptor_UserService_getUserFriendRequests);
+};
+
+
 module.exports = proto;
 

@@ -84,9 +84,9 @@ const useAuth = () => {
       } else {
         const frds = user.getFriendsList();
         const friends = frds.map((f) => ({
-          email: user.getEmail(),
-          username: user.getUsername(),
-          id: user.getId(),
+          email: f.getEmail(),
+          username: f.getUsername(),
+          id: f.getId(),
         }));
 
         const nuser = {

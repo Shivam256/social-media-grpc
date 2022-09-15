@@ -10,7 +10,7 @@ export const login = async (call, callback) => {
   console.log(data);
   const { password, email } = call.request;
 
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email }).populate("friends");
 
   if (user) {
     const isAuth = await bcrypt.compare(password, user.password);

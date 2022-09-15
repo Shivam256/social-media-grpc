@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import useUtils from "./useUtils";
 import useAuth from "./useAuth";
+import useFriend from "./useFriend";
 
 import { getUsersSuccess } from "../redux/slices/user";
 
@@ -21,8 +22,10 @@ const useUser = () => {
   const { users, pulled } = useSelector((state) => state.user);
 
   const [currentUserData, setCurrentUserData] = useState(null);
-  const { user: auser } = useAuth();
+  const [friendRequests, setFriendRequests] = useState([]);
 
+  const { user: auser } = useAuth();
+  const {checkFriendship} = useFriend();
   const { handleError } = useUtils();
 
   const getUserData = useCallback((id) => {
@@ -41,6 +44,7 @@ const useUser = () => {
           username: user.getUsername(),
           friends: user.getFriendsList(),
           isAuthenticated: user.getId() === auser.id,
+          isFriend:checkFriendship(user.getId())
         };
         setCurrentUserData(nuser);
       }
@@ -64,12 +68,36 @@ const useUser = () => {
     });
   }, []);
 
+  const getFriendRequests = useCallback(() => {
+    if (friendRequests.length > 0) return;
+
+    const frq = new UserIdRequest();
+    frq.setUserid(auser.id);
+
+    userClient.getUserFriendRequests(frq, null, (error, response) => {
+      console.log(response, "friend req response");
+      if (handleError(response)) {
+        let reqs = response.getRequestsList();
+        reqs = reqs.map((req) => ({
+          user: req.getUser().getUsername(),
+          userId: req.getUser().getId(),
+          note: req.getNote(),
+          id: req.getId(),
+        }));
+        setFriendRequests(reqs);
+
+        console.log(reqs, "hehehehe");
+      }
+    });
+  }, []);
 
   return {
     getUserData,
     fetchUsers,
     currentUserData,
     users,
+    getFriendRequests,
+    friendRequests,
   };
 };
 

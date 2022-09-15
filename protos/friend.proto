@@ -3,8 +3,8 @@ syntax = "proto3";
 service FriendService{
     rpc addFriend(AddFriendrequest) returns (FriendResponse);
     // rpc removeFriend(RemoveFriendRequest) returns (FriendResponse); 
-    // rpc rejectFriendRequest(AddFriendrequest) returns (FriendResponse);
-    // rpc approveFriendRequest(AddFriendrequest) returns (FriendResponse);
+    rpc rejectFriendRequest(RequestId) returns (FriendResponse);
+    rpc approveFriendRequest(RequestId) returns (FriendResponse);
 }
 
 message AddFriendrequest{
@@ -21,5 +21,11 @@ message FriendResponse{
 message RemoveFriendRequest{
     string userid =1 ;
     string tounfriend = 2;
+}
+
+message RequestId{
+    string token = 1;
+    string requestid = 2;
+    string userid = 3;
 }
 

@@ -17,8 +17,15 @@ const useUtils = () => {
     return true;
   };
 
+  const tokenise = (request) => {
+    const token = localStorage.getItem("accessToken");
+    request.setToken(token);
+    return request;
+  }
+
   return {
     handleError,
+    tokenise
   };
 };
 

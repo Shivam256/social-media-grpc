@@ -4,6 +4,7 @@ import { Avatar, Box, Typography } from "@mui/material";
 
 import { useParams } from "react-router-dom";
 import useUser from "../../hooks/useUser";
+import useFriend from "../../hooks/useFriend";
 
 import { ProfileContainer } from "./profile.styles";
 import { Icon } from "@iconify/react";
@@ -11,6 +12,7 @@ import { Icon } from "@iconify/react";
 const Profile = () => {
   const { userid } = useParams();
   const { getUserData, currentUserData } = useUser();
+  const { sendFriendRequest } = useFriend();
 
   const handleGetProfleData = () => {
     getUserData(userid);
@@ -19,6 +21,10 @@ const Profile = () => {
   useEffect(() => {
     handleGetProfleData();
   }, []);
+
+  const handleSendFriendRequest = () => {
+    sendFriendRequest(userid);
+  };
 
   return (
     <MyPage>
@@ -55,8 +61,18 @@ const Profile = () => {
                 </Box>
                 {!currentUserData.isAuthenticated ? (
                   <Icon
-                    icon="akar-icons:person-add"
+                    icon={
+                      currentUserData.isFriend
+                        ? "material-symbols:handshake-outline"
+                        : "akar-icons:person-add"
+                    }
+                    // icon="akar-icons:person-add"
                     className="addFriend-svg"
+                    onClick={
+                      currentUserData.isFriend
+                        ? () => {}  
+                        : handleSendFriendRequest
+                    }
                   />
                 ) : null}
               </Box>
