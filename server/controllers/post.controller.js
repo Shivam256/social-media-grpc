@@ -11,7 +11,7 @@ export const createPost = async (call, callback) => {
 };
 
 export const viewAllPosts = async (call, callback) => {
-  const resp = await Post.find({});
+  const resp = await Post.find({}).populate('comments.userId');
   // console.log(resp)
   const postArray = resp.map((post) => {
     return {
@@ -20,6 +20,19 @@ export const viewAllPosts = async (call, callback) => {
       likes: post.likes,
       imageLink: post.imageLink,
       postID: post._id.valueOf(),
+      comments: post.comments.map((c) => {
+        console.log(c, 'huuuiuiu');
+        return {
+          commentId: c._id.valueOf(),
+          message: c.message,
+          postId: post._id.valueOf(),
+          user: {
+            id: c.userId?._id?.valueOf(),
+            username: c.userId?.username,
+            email: c.userId?.email,
+          },
+        };
+      }),
     };
   });
   callback(null, { postArray });
@@ -32,16 +45,22 @@ export const deletePost = async (call, callback) => {
 };
 
 export const addComment = async (call, callback) => {
-  const { message, userId, postId } = call.request;
-  const comm = await Post.findById(postId);
-  comm.comments.push({
-    message,
-    userId,
-  });
-  const updatedPost = comm.save();
-  callback(null, {
-    message: 'comment added successfully!',
-  });
+  const { message, postId, user } = call.request.comment;
+  console.log(call.request, 'dfvdfvdfv');
+  //   console.log(postId);
+  try {
+    const post = await Post.findById(postId);
+    post?.comments.push({
+      message,
+      userId: user.id,
+    });
+    const updatedPost = post.save();
+    callback(null, {
+      message: 'comment added successfully!',
+    });
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 export const addLike = async (call, callback) => {
