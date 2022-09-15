@@ -1,6 +1,10 @@
 import React, { useCallback } from "react";
 
-import { SignUpRequest, LoginRequest } from "../protos/auth_pb";
+import {
+  SignUpRequest,
+  LoginRequest,
+  InitializeRequest,
+} from "../protos/auth_pb";
 import { AuthServiceClient } from "../protos/auth_grpc_web_pb";
 
 //redux
@@ -10,6 +14,7 @@ import {
   logoutSuccess,
   registerSuccess,
 } from "../redux/slices/auth";
+import useUtils from "./useUtils";
 
 import { useSnackbar } from "notistack";
 import { useSelector, useDispatch } from "react-redux";
@@ -23,6 +28,8 @@ const useAuth = () => {
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
+
+  const { handleError, tokenise } = useUtils();
 
   const signup = useCallback((data) => {
     const srq = new SignUpRequest();
@@ -103,7 +110,44 @@ const useAuth = () => {
     });
   }, []);
 
-  const initializeAuth = useCallback(() => {});
+  const initializeAuth = useCallback(() => {
+    const irq = new InitializeRequest();
+
+    authclient.initialize(tokenise(irq), null, (err, response) => {
+      console.log(response, "initialize response");
+      const error = response.getError();
+      const message = response.getMessage();
+      if (error == null || error == 0) {
+        console.log("i am hereerere");
+        const user = response.getUser();
+        const frds = user.getFriendsList();
+        const friends = frds.map((f) => ({
+          email: f.getEmail(),
+          username: f.getUsername(),
+          id: f.getId(),
+        }));
+        const nuser = {
+          email: user.getEmail(),
+          username: user.getUsername(),
+          id: user.getId(),
+          friends,
+        };
+        dispatch(
+          initialize({
+            user: nuser,
+            isLoggedIn: true,
+          })
+        );
+      } else {
+        dispatch(
+          initialize({
+            user: null,
+            isLoggedIn: false,
+          })
+        );
+      }
+    });
+  });
 
   const logout = useCallback(async () => {
     setSession(null);

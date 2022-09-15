@@ -33,7 +33,20 @@ message LoginResponse{
     User user = 4;
 }
 
+message InitializeRequest{
+    string token = 1;
+}
+
+message InitializeResponse{
+    int32 error = 1;
+    string message = 2;
+    User user = 3;
+}
+
+
+
 service AuthService{
     rpc signup(SignUpRequest) returns (SignUpResponse);
     rpc login(LoginRequest) returns (LoginResponse);
+    rpc initialize(InitializeRequest) returns (InitializeResponse);
 }

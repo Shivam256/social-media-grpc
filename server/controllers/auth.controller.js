@@ -71,3 +71,23 @@ export const signup = async (call, callback) => {
     user: user,
   });
 };
+
+export const initialize = async (call, callback) => {
+  try {
+    const { token } = call.request;
+    console.log(token, "here i am !!");
+    if (!token) throw new Error("Auth token not valid");
+
+    const decodeToken = jwt.verify(token, JWT_SECRET);
+    if (decodeToken) {
+      const user = await User.findById(decodeToken._id).populate("friends");
+
+      if (!user) throw new Error("User not found!");
+      console.log(user,"i=and this is the user");
+
+      callback(null, { error: 0, message: "User fetched!", user: user });
+    }
+  } catch (err) {
+    callback(null, { error: 1, message: "Something went wrong!" });
+  }
+};

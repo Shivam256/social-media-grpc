@@ -98,6 +98,7 @@ const useUser = () => {
     users,
     getFriendRequests,
     friendRequests,
+    setFriendRequests
   };
 };
 

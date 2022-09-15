@@ -191,5 +191,66 @@ proto.AuthServicePromiseClient.prototype.login =
 };
 
 
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.InitializeRequest,
+ *   !proto.InitializeResponse>}
+ */
+const methodDescriptor_AuthService_initialize = new grpc.web.MethodDescriptor(
+  '/AuthService/initialize',
+  grpc.web.MethodType.UNARY,
+  proto.InitializeRequest,
+  proto.InitializeResponse,
+  /**
+   * @param {!proto.InitializeRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.InitializeResponse.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.InitializeRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.RpcError, ?proto.InitializeResponse)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.InitializeResponse>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.AuthServiceClient.prototype.initialize =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/AuthService/initialize',
+      request,
+      metadata || {},
+      methodDescriptor_AuthService_initialize,
+      callback);
+};
+
+
+/**
+ * @param {!proto.InitializeRequest} request The
+ *     request proto
+ * @param {?Object<string, string>=} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.InitializeResponse>}
+ *     Promise that resolves to the response
+ */
+proto.AuthServicePromiseClient.prototype.initialize =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/AuthService/initialize',
+      request,
+      metadata || {},
+      methodDescriptor_AuthService_initialize);
+};
+
+
 module.exports = proto;
 
