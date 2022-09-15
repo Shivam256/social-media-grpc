@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { MyPage } from "../../globals/global.styles";
 import { Avatar, Box, Typography } from "@mui/material";
 
@@ -9,18 +9,25 @@ import useFriend from "../../hooks/useFriend";
 import { ProfileContainer } from "./profile.styles";
 import { Icon } from "@iconify/react";
 
+import ProfileEditModal from "../../components/profileEditModal/profileEditModal";
+
 const Profile = () => {
   const { userid } = useParams();
   const { getUserData, currentUserData } = useUser();
   const { sendFriendRequest } = useFriend();
+  const [showEditModal, setShowEditModal] = useState(false);
 
   const handleGetProfleData = () => {
     getUserData(userid);
   };
 
+  const toggleEditModal = () => {
+    setShowEditModal(!showEditModal);
+  };
+
   useEffect(() => {
     handleGetProfleData();
-  }, []);
+  }, [userid]);
 
   const handleSendFriendRequest = () => {
     sendFriendRequest(userid);
@@ -70,12 +77,22 @@ const Profile = () => {
                     className="addFriend-svg"
                     onClick={
                       currentUserData.isFriend
-                        ? () => {}  
+                        ? () => {}
                         : handleSendFriendRequest
                     }
                   />
-                ) : null}
+                ) : (
+                  <Icon
+                    icon="akar-icons:edit"
+                    className="addFriend-svg"
+                    onClick={toggleEditModal}
+                  />
+                )}
               </Box>
+              <ProfileEditModal
+                state={showEditModal}
+                toggleModal={toggleEditModal}
+              />
               <Box className="stats-contanier">
                 <Box className="stat">
                   <Typography className="stat-number">

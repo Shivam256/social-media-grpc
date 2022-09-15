@@ -1,4 +1,4 @@
-import { addStory } from '../controllers/story.controller';
+import { addStory } from '../controllers/story.controller.js';
 const storyService = {
   addStory,
 };

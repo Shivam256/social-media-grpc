@@ -2,3 +2,4 @@ import "protos/auth.proto";
 import "protos/post.proto";
 import "protos/user.proto";
 import "protos/friend.proto";
+import "protos/stories.proto";
