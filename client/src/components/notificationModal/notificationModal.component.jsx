@@ -59,12 +59,24 @@ const RequestOverview = styled(Box)(() => ({
 }));
 
 const NotificationModal = ({ state, toggleModal }) => {
-  const { getFriendRequests, friendRequests } = useUser();
+  const { getFriendRequests, friendRequests, setFriendRequests } = useUser();
   const { approveFriendRequest, rejectFriendRequest } = useFriend();
 
   useEffect(() => {
     getFriendRequests();
-  }, []);
+  }, [state]);
+
+  const handleApprove = (fr) => {
+    approveFriendRequest(fr.id, fr.userId);
+    const newReqs = friendRequests.filter((f) => f.id !== fr.id);
+    setFriendRequests([...newReqs]);
+  };
+
+  const handleReject = (fr) =>{
+    rejectFriendRequest(fr.id);
+    const newReqs = friendRequests.filter((f) => f.id !== fr.id);
+    setFriendRequests([...newReqs]);
+  }
 
   return (
     <Modal open={state} onClose={toggleModal}>
@@ -85,7 +97,7 @@ const NotificationModal = ({ state, toggleModal }) => {
                     className="icon-btns"
                     color="green"
                     onClick={() => {
-                      approveFriendRequest(fr.id, fr.userId);
+                      handleApprove(fr);
                     }}
                   />
                   <Icon
@@ -93,7 +105,7 @@ const NotificationModal = ({ state, toggleModal }) => {
                     className="icon-btns"
                     color="red"
                     onClick={() => {
-                      rejectFriendRequest(fr.id);
+                      handleReject(fr);
                     }}
                   />
                 </Box>
