@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 
@@ -23,22 +23,33 @@ const UserSchema = new Schema({
   friends: [
     {
       type: Schema.Types.ObjectId,
-      ref: "USER",
+      ref: 'USER',
     },
   ],
   requests: [
     {
       user: {
         type: Schema.Types.ObjectId,
-        ref: "USER",
+        ref: 'USER',
       },
       note: {
         type: String,
       },
     },
   ],
+  stories: [
+    {
+      imageLink: {
+        type: String,
+        required: true,
+      },
+      date: {
+        type: String,
+      },
+    },
+  ],
 });
 
-const User = mongoose.model("USER", UserSchema);
+const User = mongoose.model('USER', UserSchema);
 
 export default User;

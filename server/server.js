@@ -10,6 +10,7 @@ import authservice from './services/auth.service.js';
 import postService from './services/post.service.js';
 import userService from './services/user.service.js';
 import friendService from './services/friend.service.js';
+import storyService from './services/story.service.js';
 // import { createPost } from "./controllers/post.controller.js";
 
 const PROTO_PATH = 'index.proto';
@@ -24,6 +25,7 @@ server.addService(protoDescriptor.AuthService.service, authservice);
 server.addService(protoDescriptor.PostService.service, postService);
 server.addService(protoDescriptor.UserService.service, userService);
 server.addService(protoDescriptor.FriendService.service, friendService);
+server.addService(protoDescriptor.StoryService.service, storyService);
 
 server.bind(process.env.SERVER_URI, grpc.ServerCredentials.createInsecure());
 server.start();

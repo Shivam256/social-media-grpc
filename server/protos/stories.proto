@@ -1,0 +1,22 @@
+syntax="proto3";
+
+service StoryService{
+    rpc addStory(AddStoryRequest) returns (AddStoryResponse);
+}
+
+message StorySchema{
+    string imageLink=1;
+
+    string userId=2;
+    string date=3;
+    string storyId=4;
+}
+message AddStoryRequest{
+   StorySchema story=1;
+}
+message AddStoryResponse{
+    string message=1;
+}
+message ViewAllStories{
+    repeated StorySchema stories=1;
+}
