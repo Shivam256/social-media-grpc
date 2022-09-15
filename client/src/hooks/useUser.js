@@ -1,19 +1,19 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState } from 'react';
 
-import { useSnackbar } from "notistack";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import useUtils from "./useUtils";
-import useAuth from "./useAuth";
-import useFriend from "./useFriend";
+import { useSnackbar } from 'notistack';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import useUtils from './useUtils';
+import useAuth from './useAuth';
+import useFriend from './useFriend';
 
-import { getUsersSuccess } from "../redux/slices/user";
+import { getUsersSuccess } from '../redux/slices/user';
 
 //grpc
-import { UserServiceClient } from "../protos/user_grpc_web_pb";
-import { UserIdRequest, Empty } from "../protos/user_pb";
+import { UserServiceClient } from '../protos/user_grpc_web_pb';
+import { UserIdRequest, Empty } from '../protos/user_pb';
 
-const userClient = new UserServiceClient("http://localhost:9090", null, null);
+const userClient = new UserServiceClient('http://localhost:9090', null, null);
 
 const useUser = () => {
   const dispatch = useDispatch();
@@ -25,7 +25,7 @@ const useUser = () => {
   const [friendRequests, setFriendRequests] = useState([]);
 
   const { user: auser } = useAuth();
-  const {checkFriendship} = useFriend();
+  const { checkFriendship } = useFriend();
   const { handleError } = useUtils();
 
   const getUserData = useCallback((id) => {
@@ -33,18 +33,18 @@ const useUser = () => {
     urq.setUserid(id);
 
     userClient.getUserInfo(urq, null, (err, response) => {
-      console.log(response, "user id response");
+      console.log(response, 'user id response');
       if (handleError(response)) {
         const user = response.getUser();
-        console.log(user, "this is user response");
-        console.log(user.getFriendsList(), "this is friends");
+        console.log(user, 'this is user response');
+        console.log(user.getFriendsList(), 'this is friends');
         const nuser = {
           id: user.getId(),
           email: user.getEmail(),
           username: user.getUsername(),
           friends: user.getFriendsList(),
           isAuthenticated: user.getId() === auser.id,
-          isFriend:checkFriendship(user.getId())
+          isFriend: checkFriendship(user.getId()),
         };
         setCurrentUserData(nuser);
       }
@@ -75,7 +75,7 @@ const useUser = () => {
     frq.setUserid(auser.id);
 
     userClient.getUserFriendRequests(frq, null, (error, response) => {
-      console.log(response, "friend req response");
+      console.log(response, 'friend req response');
       if (handleError(response)) {
         let reqs = response.getRequestsList();
         reqs = reqs.map((req) => ({
@@ -86,7 +86,7 @@ const useUser = () => {
         }));
         setFriendRequests(reqs);
 
-        console.log(reqs, "hehehehe");
+        console.log(reqs, 'hehehehe');
       }
     });
   }, []);
