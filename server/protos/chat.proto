@@ -29,12 +29,13 @@ message GetChatRequest{
 }
 
 message GetChatResponse{
-    repeated Message messageArray = 1;
+    Message msg = 1;
 }
 
 message SendMessageRequest{
-    string chatID = 1;
-    Message message = 2;
+    string myID = 1;
+    string friendID = 2;
+    Message message = 3;
 }
 
 message ChatListRequest{

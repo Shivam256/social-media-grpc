@@ -27,3 +27,65 @@ export const getMyChatList = async(call,callback)=>{
     // console.log(list)
     callback(null,{list})
 }
+
+export const sendMessage = async(call,callback)=>{
+    const {myID,friendID} = call.request;
+    const {by,name,message,time} = call.request.message;
+
+    const getChat = await Chat.findOne({
+        $or: [
+            { $ans: [{user1:myID}, {user2:friendID}] },
+            { $ans: [{user2:friendID}, {user1:myID}] }
+        ]
+    })
+
+    const oldMessages = getChat.messages
+    oldMessages.push(
+        {
+            by:by.valueOf(),name,message,time
+        }
+    )
+
+    const updateMessages = await Chat.findOneAndUpdate(
+        {
+            $or: [
+                { $ans: [{user1:myID}, {user2:friendID}] },
+                { $ans: [{user2:friendID}, {user1:myID}] }
+            ]
+        },{
+            messages:oldMessages
+        }
+
+    )
+
+    if(updateMessages) callback(null,{res:"Message Sent!"})
+    else callback(null,{res:"Failed To Send Message"})
+
+}
+
+export const getChat = async(call,callback)=>{
+
+    const {user1,user2} = call.request;
+
+    console.log(user1,user2)
+    const getChat = await Chat.findOne({
+        $or: [
+            { $ans: [{user1}, {user2}] },
+            { $ans: [{user2}, {user1}] }
+        ]
+    })
+
+    const chatArray = getChat.messages;
+    // console.log(chatArray)
+    for(const x of chatArray){
+        call.write({msg:{
+            by:x.by,
+            name:x.name,
+            message:x.message,
+            time:x.time
+        }})
+    }
+
+    call.end()
+
+}

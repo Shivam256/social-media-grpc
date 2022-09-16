@@ -1,8 +1,10 @@
-import { createchat,getMyChatList} from "../controllers/chat.controller.js";
+import { createchat,getMyChatList,sendMessage,getChat} from "../controllers/chat.controller.js";
 
 const authservice = {
     createchat,
-    getMyChatList
+    getMyChatList,
+    sendMessage,
+    getChat
 };
 
 export default authservice;

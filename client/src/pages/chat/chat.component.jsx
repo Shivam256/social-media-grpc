@@ -15,9 +15,10 @@ import useChat from '../../hooks/useChat'
 
 const Chat = () => {
   const { user } = useAuth();
-  const {startChat,getChatList,chats} = useChat()
+  const {startChat,getChatList,chats,sendMsg,getMsg,
+    msgArr} = useChat()
   const [currentChat, setCurrentChat] = useState(null);
-  console.log(user,"CHAT IN USEr")
+  const [msg,setMsg] = useState();
   const selectFriend = (friend) => {
     setCurrentChat(friend);
   };
@@ -25,6 +26,12 @@ const Chat = () => {
   useEffect(() => {
     getChatList(user.id)
   }, [])
+
+  // useEffect(() => {
+      // if(currentChat!=null){
+      // }
+      // getMsg(user?.id,currentChat?.id)
+  // }, [currentChat])
   
 
   return (
@@ -53,6 +60,7 @@ const Chat = () => {
             <UserOverview
               onClick={() => {
                 selectFriend(friend);
+                getMsg(user?.id,friend?.id)
               }}
               selected={currentChat != null && friend.id == currentChat.id}
             >
@@ -87,10 +95,25 @@ const Chat = () => {
               >
                 <Avatar />
                 <Typography>{currentChat.name}</Typography>
-              </Box>
+                </Box>
+                <Box>
+
+                {
+                  msgArr?.map((msg)=>{
+                    return(
+                      <Box>
+                        {msg.message}
+                        </Box>
+                      )
+                    })
+                  }
+                  </Box>
               <InputSection>
-                <ChatInput />
-                <button >SEND</button>
+                <ChatInput onChange={(e)=>setMsg(e.target.value)} />
+                <button onClick={()=>{
+                  sendMsg(currentChat.id,msg) 
+                  getMsg(user?.id,currentChat?.id)
+                }}>SEND</button>
               </InputSection>
             </Box>
           ) : (

@@ -7,6 +7,7 @@
  * @public
  */
 // GENERATED CODE -- DO NOT EDIT!
+
 /* eslint-disable */
 
 
@@ -118,7 +119,7 @@ if (goog.DEBUG && !COMPILED) {
  * @constructor
  */
 proto.GetChatResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.GetChatResponse.repeatedFields_, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.GetChatResponse, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -883,13 +884,6 @@ proto.GetChatRequest.prototype.setUser2 = function(value) {
 
 
 
-/**
- * List of repeated fields within this message type.
- * @private {!Array<number>}
- * @const
- */
-proto.GetChatResponse.repeatedFields_ = [1];
-
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -921,8 +915,7 @@ proto.GetChatResponse.prototype.toObject = function(opt_includeInstance) {
  */
 proto.GetChatResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    messagearrayList: jspb.Message.toObjectList(msg.getMessagearrayList(),
-    proto.Message.toObject, includeInstance)
+    msg: (f = msg.getMsg()) && proto.Message.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -962,7 +955,7 @@ proto.GetChatResponse.deserializeBinaryFromReader = function(msg, reader) {
     case 1:
       var value = new proto.Message;
       reader.readMessage(value,proto.Message.deserializeBinaryFromReader);
-      msg.addMessagearray(value);
+      msg.setMsg(value);
       break;
     default:
       reader.skipField();
@@ -993,9 +986,9 @@ proto.GetChatResponse.prototype.serializeBinary = function() {
  */
 proto.GetChatResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getMessagearrayList();
-  if (f.length > 0) {
-    writer.writeRepeatedMessage(
+  f = message.getMsg();
+  if (f != null) {
+    writer.writeMessage(
       1,
       f,
       proto.Message.serializeBinaryToWriter
@@ -1005,40 +998,39 @@ proto.GetChatResponse.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * repeated Message messageArray = 1;
- * @return {!Array<!proto.Message>}
+ * optional Message msg = 1;
+ * @return {?proto.Message}
  */
-proto.GetChatResponse.prototype.getMessagearrayList = function() {
-  return /** @type{!Array<!proto.Message>} */ (
-    jspb.Message.getRepeatedWrapperField(this, proto.Message, 1));
+proto.GetChatResponse.prototype.getMsg = function() {
+  return /** @type{?proto.Message} */ (
+    jspb.Message.getWrapperField(this, proto.Message, 1));
 };
 
 
 /**
- * @param {!Array<!proto.Message>} value
+ * @param {?proto.Message|undefined} value
  * @return {!proto.GetChatResponse} returns this
 */
-proto.GetChatResponse.prototype.setMessagearrayList = function(value) {
-  return jspb.Message.setRepeatedWrapperField(this, 1, value);
+proto.GetChatResponse.prototype.setMsg = function(value) {
+  return jspb.Message.setWrapperField(this, 1, value);
 };
 
 
 /**
- * @param {!proto.Message=} opt_value
- * @param {number=} opt_index
- * @return {!proto.Message}
- */
-proto.GetChatResponse.prototype.addMessagearray = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 1, opt_value, proto.Message, opt_index);
-};
-
-
-/**
- * Clears the list making it empty but non-null.
+ * Clears the message field making it undefined.
  * @return {!proto.GetChatResponse} returns this
  */
-proto.GetChatResponse.prototype.clearMessagearrayList = function() {
-  return this.setMessagearrayList([]);
+proto.GetChatResponse.prototype.clearMsg = function() {
+  return this.setMsg(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.GetChatResponse.prototype.hasMsg = function() {
+  return jspb.Message.getField(this, 1) != null;
 };
 
 
@@ -1074,7 +1066,8 @@ proto.SendMessageRequest.prototype.toObject = function(opt_includeInstance) {
  */
 proto.SendMessageRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    chatid: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    myid: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    friendid: jspb.Message.getFieldWithDefault(msg, 2, ""),
     message: (f = msg.getMessage()) && proto.Message.toObject(includeInstance, f)
   };
 
@@ -1114,9 +1107,13 @@ proto.SendMessageRequest.deserializeBinaryFromReader = function(msg, reader) {
     switch (field) {
     case 1:
       var value = /** @type {string} */ (reader.readString());
-      msg.setChatid(value);
+      msg.setMyid(value);
       break;
     case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setFriendid(value);
+      break;
+    case 3:
       var value = new proto.Message;
       reader.readMessage(value,proto.Message.deserializeBinaryFromReader);
       msg.setMessage(value);
@@ -1150,17 +1147,24 @@ proto.SendMessageRequest.prototype.serializeBinary = function() {
  */
 proto.SendMessageRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getChatid();
+  f = message.getMyid();
   if (f.length > 0) {
     writer.writeString(
       1,
       f
     );
   }
+  f = message.getFriendid();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
   f = message.getMessage();
   if (f != null) {
     writer.writeMessage(
-      2,
+      3,
       f,
       proto.Message.serializeBinaryToWriter
     );
@@ -1169,10 +1173,10 @@ proto.SendMessageRequest.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * optional string chatID = 1;
+ * optional string myID = 1;
  * @return {string}
  */
-proto.SendMessageRequest.prototype.getChatid = function() {
+proto.SendMessageRequest.prototype.getMyid = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
@@ -1181,18 +1185,36 @@ proto.SendMessageRequest.prototype.getChatid = function() {
  * @param {string} value
  * @return {!proto.SendMessageRequest} returns this
  */
-proto.SendMessageRequest.prototype.setChatid = function(value) {
+proto.SendMessageRequest.prototype.setMyid = function(value) {
   return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
 /**
- * optional Message message = 2;
+ * optional string friendID = 2;
+ * @return {string}
+ */
+proto.SendMessageRequest.prototype.getFriendid = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.SendMessageRequest} returns this
+ */
+proto.SendMessageRequest.prototype.setFriendid = function(value) {
+  return jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional Message message = 3;
  * @return {?proto.Message}
  */
 proto.SendMessageRequest.prototype.getMessage = function() {
   return /** @type{?proto.Message} */ (
-    jspb.Message.getWrapperField(this, proto.Message, 2));
+    jspb.Message.getWrapperField(this, proto.Message, 3));
 };
 
 
@@ -1201,7 +1223,7 @@ proto.SendMessageRequest.prototype.getMessage = function() {
  * @return {!proto.SendMessageRequest} returns this
 */
 proto.SendMessageRequest.prototype.setMessage = function(value) {
-  return jspb.Message.setWrapperField(this, 2, value);
+  return jspb.Message.setWrapperField(this, 3, value);
 };
 
 
@@ -1219,7 +1241,7 @@ proto.SendMessageRequest.prototype.clearMessage = function() {
  * @return {boolean}
  */
 proto.SendMessageRequest.prototype.hasMessage = function() {
-  return jspb.Message.getField(this, 2) != null;
+  return jspb.Message.getField(this, 3) != null;
 };
 
 
