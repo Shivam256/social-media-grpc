@@ -87,6 +87,7 @@ const useUser = () => {
           userId: req.getUser().getId(),
           note: req.getNote(),
           id: req.getId(),
+          
         }));
         setFriendRequests(reqs);
 
