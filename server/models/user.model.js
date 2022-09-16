@@ -9,7 +9,7 @@ const StorySchema = new Schema({
   createdAt: {
     type: Date,
     default: Date.now,
-    expires: 86400,
+    expires: 100000,
   },
   userId: {
     type: mongoose.Schema.Types.ObjectId,

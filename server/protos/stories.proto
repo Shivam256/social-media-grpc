@@ -23,11 +23,7 @@ message AddStoryRequest{
 message AddStoryResponse{
     string message=1;
 }
-message CombinedDetails{
-    UserDetails2 user=2;
-    repeated StorySchema stories=1;
-}
 message getStoriesRequest{}
 message ViewAllStories{
-   repeated CombinedDetails allStories=1;
+   repeated StorySchema allStories=1;
 }

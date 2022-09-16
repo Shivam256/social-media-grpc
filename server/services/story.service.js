@@ -1,6 +1,6 @@
-import { addStory, viewAllStories } from '../controllers/story.controller.js';
+import { addStory, getStories } from '../controllers/story.controller.js';
 const storyService = {
   addStory,
-  viewAllStories,
+  getStories,
 };
 export default storyService;
