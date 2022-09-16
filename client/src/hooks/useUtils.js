@@ -5,8 +5,8 @@ const useUtils = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   const handleError = (response) => {
-    const error = response.getError();
-    const message = response.getMessage();
+    const error = response?.getError();
+    const message = response?.getMessage();
 
     if (error == null || error == 0) return true;
 

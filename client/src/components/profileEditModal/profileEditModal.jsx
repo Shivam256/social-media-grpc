@@ -1,7 +1,11 @@
 import { Avatar, Box, Modal, Slide, styled, Badge } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Icon } from "@iconify/react";
+import { Fade } from "react-reveal";
 import { CustomButton, CustomTextField } from "../../globals/global.styles";
+import { useDropzone } from "react-dropzone";
+
+import useAuth from "../../hooks/useAuth";
 
 const ProfileEditModalContainer = styled(Box)(({ theme }) => ({
   position: "absolute",
@@ -18,7 +22,6 @@ const ProfileEditModalContainer = styled(Box)(({ theme }) => ({
   gap: "20px",
   outline: "none",
   alignItems: "center",
-  transition: "all 0.5s ease-in",
   "& .heading": {
     fontSize: "1.2em",
     fontWeight: 700,
@@ -39,10 +42,40 @@ const ProfileEditModalContainer = styled(Box)(({ theme }) => ({
 
 const ProfileEditModal = ({ state, toggleModal }) => {
   const [isUploadActive, setIsUploadActive] = useState(false);
+  const [userData, setUserData] = useState({
+    profilePic: "",
+    username: "",
+    phone: "",
+  });
 
   const toggleIsUploadActive = () => {
     setIsUploadActive(!isUploadActive);
   };
+
+  const { user } = useAuth();
+
+  useEffect(() => {
+    setUserData({
+      profilePic: user.profilePic,
+      username: user.username,
+      phone: user.phone,
+    });
+  }, [user]);
+
+  const onDrop = useCallback((acceptedFiles) => {
+    console.log(acceptedFiles);
+    setUserData({
+      ...userData,
+      profilePic: URL.createObjectURL(acceptedFiles[0]),
+    });
+  }, []);
+
+  const { getRootProps, isDragActive, getInputProps } = useDropzone({ onDrop });
+
+  const handleChange = (e) => {
+    setUserData({ ...userData, [e.target.name]: e.target.value });
+  };
+
   return (
     <Modal open={state} onClose={toggleModal}>
       <Slide in={state} direction="up">
@@ -54,6 +87,7 @@ const ProfileEditModal = ({ state, toggleModal }) => {
               flexDirection: "column",
               gap: "30px",
               alignItems: "center",
+              "& .react-reveal": { width: "100%" },
             }}
           >
             <Badge
@@ -75,40 +109,54 @@ const ProfileEditModal = ({ state, toggleModal }) => {
                   }}
                   onClick={toggleIsUploadActive}
                 >
-                  <Icon icon="ci:edit" color="white" />
+                  {isUploadActive ? (
+                    <Icon icon="ep:close-bold" color="white" />
+                  ) : (
+                    <Icon icon="ci:edit" color="white" />
+                  )}
                 </Box>
               }
             >
-              <Avatar sx={{ width: "150px", height: "150px" }} />
+              <Avatar
+                sx={{ width: "150px", height: "150px" }}
+                src={userData.profilePic}
+              />
             </Badge>
 
             {isUploadActive ? (
-              <Box
-                sx={{
-                  border: "2px dashed #a4a4a4",
-                  width: "100%",
-                  padding: "55px 20px",
-                  borderRadius: "10px",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
-                drag and drop the image here!
-              </Box>
+              <Fade>
+                <Box
+                  sx={{
+                    border: isDragActive
+                      ? "2px dashed #109ece"
+                      : "2px dashed #a4a4a4",
+                    width: "100%",
+                    padding: "55px 20px",
+                    borderRadius: "10px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                  {...getRootProps()}
+                >
+                  <input {...getInputProps()} />
+                  drag and drop the image here!
+                </Box>
+              </Fade>
             ) : (
               <Box>
                 <CustomTextField
                   label="Username"
                   style={{ marginBottom: "20px" }}
+                  name="username"
                 />
-                <CustomTextField label="Phone" />
+                <CustomTextField label="Phone" name="phone" />
               </Box>
             )}
 
             <Box sx={{ display: "flex", gap: "20px" }}>
               <CustomButton>SAVE</CustomButton>
-              <CustomButton>CLOSE</CustomButton>
+              <CustomButton onClick={toggleModal}>CLOSE</CustomButton>
             </Box>
           </Box>
         </ProfileEditModalContainer>

@@ -1,4 +1,4 @@
-// source: src/protos/user.proto
+// source: client/src/protos/user.proto
 /**
  * @fileoverview
  * @enhanceable
