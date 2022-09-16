@@ -3,3 +3,4 @@ import "protos/post.proto";
 import "protos/user.proto";
 import "protos/friend.proto";
 import "protos/stories.proto";
+import "protos/chat.proto";
