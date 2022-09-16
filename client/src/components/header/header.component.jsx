@@ -33,6 +33,7 @@ const Header = () => {
         <Link to={`/client/profile/${user.id}`}>
           <Icon icon="iconoir:profile-circled" />
         </Link>
+        <button onClick={logout}>logout</button>
       </div>
       <NotificationModal
         state={showNotificationModal}

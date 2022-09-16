@@ -11,5 +11,6 @@ const postService = {
   viewAllPosts,
   deletePost,
   addLike,
+  addComment,
 };
 export default postService;
