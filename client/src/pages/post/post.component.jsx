@@ -52,7 +52,6 @@ const PostComponent = () => {
           enqueueSnackbar(response.toObject().msg, { variant: 'success' });
         }
       });
-
       setPostAdded(!postAdded);
     } else {
       navigate('/login');
