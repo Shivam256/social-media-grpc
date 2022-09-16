@@ -1,6 +1,22 @@
 import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
+const StorySchema = new Schema({
+  imageLink: {
+    type: String,
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+    expires: 86400,
+  },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'USER',
+  },
+});
+export const Story = mongoose.model('STORY', StorySchema);
 
 const UserSchema = new Schema({
   email: {
@@ -33,17 +49,6 @@ const UserSchema = new Schema({
         ref: 'USER',
       },
       note: {
-        type: String,
-      },
-    },
-  ],
-  stories: [
-    {
-      imageLink: {
-        type: String,
-        required: true,
-      },
-      date: {
         type: String,
       },
     },

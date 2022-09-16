@@ -15,6 +15,7 @@ import {
 } from '../../protos/post_pb';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import Stories from '../../components/Stories/stories';
 
 const client = new PostServiceClient('http://localhost:9090', null, null);
 
@@ -83,6 +84,9 @@ const PostComponent = () => {
       >
         Welcome To Post Section
       </Typography>
+      <Box>
+        <Stories />
+      </Box>
 
       <Box sx={{ width: 200, p: 1, m: 1 }}>
         <TextField
