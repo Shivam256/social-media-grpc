@@ -5,16 +5,19 @@ const Schema = mongoose.Schema;
 const chatSchema = new Schema({
   user1: {
     type: Schema.Types.ObjectId,
+    ref:'USER',
     required: true,
   },
   user2:{
     type:Schema.Types.ObjectId,
+    ref:'USER',
     required:true,
   },
   messages:[
     {
         by:{
             type:Schema.Types.ObjectId,
+            ref:'USER',
             required:true
         },
         name:{

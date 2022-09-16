@@ -1,20 +1,51 @@
 syntax = "proto3";
 
-message EmptyTokenRequest{
-    string token = 1;
+service ChatService{
+    rpc createchat(CreateChatRequest) returns (CreateChatResponse);
+    rpc getChat(GetChatRequest) returns (stream GetChatResponse);
+    rpc sendMessage(SendMessageRequest) returns (CreateChatResponse);
+    rpc getMyChatList(ChatListRequest) returns (ChatListResponse);
 }
 
-message UserData{
+message Message{
+    string by=1;
+    string name=2;
+    string message=3;
+    string time=4;
+}
+
+message CreateChatRequest{
+    string user1 = 1;
+    string user2 = 2;
+}
+
+message CreateChatResponse{
+    string res = 1;
+}
+
+message GetChatRequest{
+    string user1 = 1;
+    string user2 = 2;
+}
+
+message GetChatResponse{
+    repeated Message messageArray = 1;
+}
+
+message SendMessageRequest{
+    string chatID = 1;
+    Message message = 2;
+}
+
+message ChatListRequest{
+    string myID = 1;
+}
+
+message ChatList{
     string id = 1;
     string name = 2;
 }
 
-message FriendsResponse{
-    int32 error = 1;
-    string message = 2;
-    repeated UserData friends = 3;
-}
-
-service ChatService{
-    rpc getUserFriends(EmptyTokenRequest) returns (FriendsResponse);
+message ChatListResponse{
+    repeated ChatList list = 1; 
 }
