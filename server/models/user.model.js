@@ -6,16 +6,16 @@ const StorySchema = new Schema({
     type: String,
     required: true,
   },
-  createdAt: {
-    type: Date,
-    default: new Date(),
-    expires: '1440m',
-  },
+  // createdAt: {
+  //   type: Date,
+  //   default: new Date(),
+  // },
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'USER',
   },
 });
+StorySchema.index({ createdAt: Date.now }, { expireAfterSeconds: 3600 });
 export const Story = mongoose.model('STORY', StorySchema);
 
 const UserSchema = new Schema({
