@@ -70,3 +70,14 @@ export const addLike = async (call, callback) => {
   const incLike = await Post.findByIdAndUpdate(id, { likes: prevLikes });
   callback(null, {});
 };
+
+export const getPostByMe = async(call,cb) =>{
+  const id = call.request.userID;
+  const posts = await Post.find({})
+  const arr = posts.filter((post)=>{
+    // console.log(post)
+    // if(post.userID.valueOf()===id) console.log("FSFGFHHHHHHHHHHH")
+    return post.userID.valueOf()===id
+  })
+  cb(null,{postArray:arr})
+}

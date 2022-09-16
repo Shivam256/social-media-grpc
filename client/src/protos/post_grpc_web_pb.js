@@ -316,6 +316,67 @@ proto.PostServicePromiseClient.prototype.addComment =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
+ *   !proto.GetPostByMeRequest,
+ *   !proto.ViewAllPostResponse>}
+ */
+const methodDescriptor_PostService_getPostByMe = new grpc.web.MethodDescriptor(
+  '/PostService/getPostByMe',
+  grpc.web.MethodType.UNARY,
+  proto.GetPostByMeRequest,
+  proto.ViewAllPostResponse,
+  /**
+   * @param {!proto.GetPostByMeRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.ViewAllPostResponse.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.GetPostByMeRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.RpcError, ?proto.ViewAllPostResponse)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.ViewAllPostResponse>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.PostServiceClient.prototype.getPostByMe =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/PostService/getPostByMe',
+      request,
+      metadata || {},
+      methodDescriptor_PostService_getPostByMe,
+      callback);
+};
+
+
+/**
+ * @param {!proto.GetPostByMeRequest} request The
+ *     request proto
+ * @param {?Object<string, string>=} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.ViewAllPostResponse>}
+ *     Promise that resolves to the response
+ */
+proto.PostServicePromiseClient.prototype.getPostByMe =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/PostService/getPostByMe',
+      request,
+      metadata || {},
+      methodDescriptor_PostService_getPostByMe);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
  *   !proto.AddLikeRequest,
  *   !proto.AddLikeResponse>}
  */
