@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { StoryServiceClient } from '../protos/stories_grpc_web_pb';
 import {
   AddStoryRequest,
@@ -8,6 +9,7 @@ import {
 const client = new StoryServiceClient('http://localhost:9090', null, null);
 
 const useStory = () => {
+  const [allStories, setAllStories] = useState();
   const addStory = async (imageLink, userId, date) => {
     const storyReq = new AddStoryRequest();
     const storyData = new StorySchema();
@@ -32,12 +34,15 @@ const useStory = () => {
         console.log(err);
       } else {
         console.log(response.toObject());
+        setAllStories(response.toObject());
       }
     });
   };
   return {
     addStory,
     viewStories,
+    setAllStories,
+    allStories,
   };
 };
 

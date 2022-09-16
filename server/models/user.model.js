@@ -8,8 +8,8 @@ const StorySchema = new Schema({
   },
   createdAt: {
     type: Date,
-    default: Date.now,
-    expires: 100000,
+    default: new Date(),
+    expires: '1440m',
   },
   userId: {
     type: mongoose.Schema.Types.ObjectId,
