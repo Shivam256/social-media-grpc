@@ -30,6 +30,9 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  profilePic:{
+    type:String
+  },
   username: {
     type: String,
   },

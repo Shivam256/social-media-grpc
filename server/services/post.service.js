@@ -4,13 +4,15 @@ import {
   deletePost,
   addComment,
   addLike,
+  getPostByMe,
 } from '../controllers/post.controller.js';
 
 const postService = {
   createPost,
   viewAllPosts,
   deletePost,
-  addComment,
   addLike,
+  addComment,
+  getPostByMe,
 };
 export default postService;

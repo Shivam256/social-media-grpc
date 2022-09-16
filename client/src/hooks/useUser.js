@@ -10,8 +10,11 @@ import useFriend from './useFriend';
 import { getUsersSuccess } from '../redux/slices/user';
 
 //grpc
+import { PostServiceClient } from '../protos/post_grpc_web_pb';
 import { UserServiceClient } from '../protos/user_grpc_web_pb';
 import { UserIdRequest, Empty } from '../protos/user_pb';
+import {GetPostByMeRequest} from '../protos/post_pb'
+const postClient = new PostServiceClient('http://localhost:9090', null, null);
 
 const userClient = new UserServiceClient('http://localhost:9090', null, null);
 
@@ -23,6 +26,7 @@ const useUser = () => {
 
   const [currentUserData, setCurrentUserData] = useState(null);
   const [friendRequests, setFriendRequests] = useState([]);
+  const [myPosts,setMyPosts] = useState([])
 
   const { user: auser } = useAuth();
   const { checkFriendship } = useFriend();
@@ -83,12 +87,23 @@ const useUser = () => {
           userId: req.getUser().getId(),
           note: req.getNote(),
           id: req.getId(),
+          
         }));
         setFriendRequests(reqs);
 
         console.log(reqs, 'hehehehe');
       }
     });
+  }, []);
+
+
+  const getMyPosts = useCallback((id) => {
+    
+      const  data = new GetPostByMeRequest();
+      data.setUserid(id);
+      postClient.getPostByMe(data,null,(err,res)=>{
+          setMyPosts(res.toObject().postarrayList)
+      })
   }, []);
 
   return {
@@ -98,7 +113,9 @@ const useUser = () => {
     users,
     getFriendRequests,
     friendRequests,
-    setFriendRequests
+    setFriendRequests,
+    getMyPosts,
+    myPosts
   };
 };
 

@@ -23,7 +23,7 @@ const PostComponent = () => {
   const { isLoggedIn, user } = useSelector((state) => state.auth);
   const [pdata, setPdata] = useState();
   const [postArr, setPostArr] = useState();
-  const [postAdded, setPostAdded] = useState(false);
+  const [postAdded, setPostAdded] = useState(true);
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const handleChange = (e) => {
@@ -54,6 +54,7 @@ const PostComponent = () => {
       });
 
       setPostAdded(!postAdded);
+
     } else {
       navigate('/login');
       enqueueSnackbar('Please Login', { variant: 'warning' });
@@ -75,7 +76,7 @@ const PostComponent = () => {
 
   return (
     <>
-      <Typography
+      {/* <Typography
         sx={{ mt: 5 }}
         variant="h4"
         align="center"
@@ -83,7 +84,7 @@ const PostComponent = () => {
         gutterBottom
       >
         Welcome To Post Section
-      </Typography>
+      </Typography> */}
       <Box>
         <Stories />
       </Box>

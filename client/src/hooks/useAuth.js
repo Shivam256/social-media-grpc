@@ -130,6 +130,7 @@ const useAuth = () => {
           email: user.getEmail(),
           username: user.getUsername(),
           id: user.getId(),
+          phone:user.getPhone(),
           friends,
         };
         dispatch(

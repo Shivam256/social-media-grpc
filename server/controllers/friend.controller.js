@@ -1,6 +1,10 @@
 import User from "../models/user.model.js";
 
-import middlewares from "../middlewares/index.js";
+// import middlewares from "../middlewares/index.js";
+
+import grpcHelpers from "grpc-web-helpers";
+
+const { isLoggedIn } = grpcHelpers.middlewares(User, "thisIsNiceSecrettt");
 
 export const addFriend = async (call, callback) => {
   try {
@@ -33,7 +37,7 @@ export const addFriend = async (call, callback) => {
 export const approveFriendRequest = async (call, callback) => {
   try {
     let data = { user: null };
-    await middlewares.isLoggedIn(call, callback, data);
+    await isLoggedIn(call, callback, data);
 
     const { requestid, userid } = call.request;
 
@@ -70,7 +74,7 @@ export const approveFriendRequest = async (call, callback) => {
 export const rejectFriendRequest = async (call, callback) => {
   try {
     let data = { user: null };
-    await middlewares.isLoggedIn(call, callback, data);
+    await isLoggedIn(call, callback, data);
 
     const { requestid } = call.request;
     const user = await User.findById(data.user._id);
