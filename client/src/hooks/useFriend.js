@@ -1,16 +1,15 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState } from 'react';
+import { useSnackbar } from 'notistack';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import useAuth from './useAuth';
+import useUtils from './useUtils';
 
-import { useSnackbar } from "notistack";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import useAuth from "./useAuth";
-import useUtils from "./useUtils";
-
-import { FriendServiceClient } from "../protos/friend_grpc_web_pb";
-import { AddFriendrequest, RequestId } from "../protos/friend_pb";
+import { FriendServiceClient } from '../protos/friend_grpc_web_pb';
+import { AddFriendrequest, RequestId } from '../protos/friend_pb';
 
 const friendClient = new FriendServiceClient(
-  "http://localhost:9090",
+  'http://localhost:9090',
   null,
   null
 );
@@ -24,13 +23,13 @@ const useFriend = () => {
 
   const sendFriendRequest = useCallback((id) => {
     const frq = new AddFriendrequest();
-    frq.setUserid(user.id).setTofriendid(id).setNote("");
+    frq.setUserid(user.id).setTofriendid(id).setNote('');
 
     friendClient.addFriend(frq, null, (err, response) => {
-      console.log(response, "add friend error");
+      console.log(response, 'add friend error');
       if (handleError(response)) {
-        enqueueSnackbar("Friend request sent successfully!", {
-          variant: "success",
+        enqueueSnackbar('Friend request sent successfully!', {
+          variant: 'success',
         });
       }
     });
@@ -55,11 +54,11 @@ const useFriend = () => {
     arq.setRequestid(id).setUserid(userid);
 
     friendClient.approveFriendRequest(tokenise(arq), null, (err, response) => {
-      console.log(response, "here is the response");
+      console.log(response, 'here is the response');
       if (handleError(response)) {
         //do something
-        enqueueSnackbar("Friend request accepted successfully!", {
-          variant: "success",
+        enqueueSnackbar('Friend request accepted successfully!', {
+          variant: 'success',
         });
       }
     });
@@ -72,7 +71,7 @@ const useFriend = () => {
     friendClient.rejectFriendRequest(tokenise(rrq), null, (err, response) => {
       console.log(response);
       if (handleError(response)) {
-        enqueueSnackbar("Friend request rejected!", { variant: "success" });
+        enqueueSnackbar('Friend request rejected!', { variant: 'success' });
       }
     });
   }, []);

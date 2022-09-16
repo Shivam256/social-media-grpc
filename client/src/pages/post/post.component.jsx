@@ -24,6 +24,7 @@ const PostComponent = () => {
   const [pdata, setPdata] = useState();
   const [postArr, setPostArr] = useState();
   const [postAdded, setPostAdded] = useState(true);
+
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const handleChange = (e) => {
@@ -54,7 +55,6 @@ const PostComponent = () => {
       });
 
       setPostAdded(!postAdded);
-
     } else {
       navigate('/login');
       enqueueSnackbar('Please Login', { variant: 'warning' });
