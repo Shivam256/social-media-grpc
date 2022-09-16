@@ -3,12 +3,17 @@ syntax="proto3";
 service StoryService{
     rpc addStory(AddStoryRequest) returns (AddStoryResponse);
 }
+message UserDetails2{
+    string id=1; //req
+    string username=2; //res
 
+    string email=3; //res
+}
 message StorySchema{
-    string imageLink=1;
-
-    string userId=2;
+    string imageLink=1; //req
+    UserDetails2 user=2; 
     string date=3;
+    string storyId=4;
 }
 message AddStoryRequest{
    StorySchema story=1;
@@ -16,6 +21,10 @@ message AddStoryRequest{
 message AddStoryResponse{
     string message=1;
 }
-message ViewAllStories{
+message CombinedDetails{
+    UserDetails2 user=2;
     repeated StorySchema stories=1;
+}
+message ViewAllStories{
+   repeated CombinedDetails allStories=1;
 }
