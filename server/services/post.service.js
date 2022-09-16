@@ -4,6 +4,7 @@ import {
   deletePost,
   addComment,
   addLike,
+  getPostByMe,
 } from '../controllers/post.controller.js';
 
 const postService = {
@@ -12,5 +13,6 @@ const postService = {
   deletePost,
   addLike,
   addComment,
+  getPostByMe,
 };
 export default postService;

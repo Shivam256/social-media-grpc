@@ -13,7 +13,7 @@ import ProfileEditModal from "../../components/profileEditModal/profileEditModal
 
 const Profile = () => {
   const { userid } = useParams();
-  const { getUserData, currentUserData } = useUser();
+  const { getUserData, currentUserData, getMyPosts,myPosts } = useUser();
   const { sendFriendRequest } = useFriend();
   const [showEditModal, setShowEditModal] = useState(false);
 
@@ -27,11 +27,18 @@ const Profile = () => {
 
   useEffect(() => {
     handleGetProfleData();
+    getPosts()
   }, [userid]);
 
   const handleSendFriendRequest = () => {
     sendFriendRequest(userid);
   };
+
+  const getPosts = ()=>{
+    getMyPosts(userid)
+  }
+
+
 
   return (
     <MyPage>
@@ -101,7 +108,7 @@ const Profile = () => {
                   <Typography>Friends</Typography>
                 </Box>
                 <Box className="stat">
-                  <Typography className="stat-number">0</Typography>
+                  <Typography className="stat-number">{myPosts.length}</Typography>
                   <Typography>Posts</Typography>
                 </Box>
               </Box>
