@@ -1,4 +1,4 @@
-import { styled, Box } from "@mui/material";
+import { styled, Box,TextField } from "@mui/material";
 
 export const ChatContainer = styled(Box)(() => ({
   width: "100%",
@@ -16,6 +16,9 @@ export const ChatSidebar = styled(Box)(() => ({
   // backgroundColor:'red',
   padding: "5px",
   borderRight: "1px solid #a4a4a4",
+  display: "flex",
+  flexDirection: "column",
+  gap: "10px",
 }));
 
 export const ChatScreen = styled(Box)(() => ({
@@ -25,12 +28,29 @@ export const ChatScreen = styled(Box)(() => ({
   // backgroundColor:'red'
 }));
 
-export const UserOverview = styled(Box)(() => ({
+export const UserOverview = styled(Box)(({ selected }) => ({
   display: "flex",
   alignItems: "center",
   gap: "20px",
   padding: "10px",
-  backgroundColor: "#f0f0f0",
+  backgroundColor: selected ? "#109ece" : "#f0f0f0",
   borderRadius: "5px",
-cursor: "pointer",
+  cursor: "pointer",
 }));
+
+
+export const ChatInput = styled("input")(()=>({
+  width:'100%',
+  border:'none',
+  outline:'none',
+  padding:'10px',
+  borderRadius:'10px'
+
+}))
+
+export const InputSection = styled(Box)(()=>({
+  width:'100%',
+  backgroundColor:'#f0f0f0',
+  padding:'10px',
+  borderRadius:'5px'
+}))
