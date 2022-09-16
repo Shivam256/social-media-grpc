@@ -149,8 +149,15 @@ const ProfileEditModal = ({ state, toggleModal }) => {
                   label="Username"
                   style={{ marginBottom: "20px" }}
                   name="username"
+                  value={userData.username}
+                  onChange={handleChange}
                 />
-                <CustomTextField label="Phone" name="phone" />
+                <CustomTextField
+                  label="Phone"
+                  name="phone"
+                  value={userData.phone}
+                  onChange={handleChange}
+                />
               </Box>
             )}
 
