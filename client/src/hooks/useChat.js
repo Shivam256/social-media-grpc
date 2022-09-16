@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import useAuth from "./useAuth";
 
 import { ChatServiceClient } from "../protos/chat_grpc_web_pb";
-import { CreateChatRequest, CreateChatResponse ,ChatListRequest} from "../protos/chat_pb";
+import { CreateChatRequest, CreateChatResponse ,ChatListRequest,SendMessageRequest,Message,GetChatRequest} from "../protos/chat_pb";
 
 const chatClient = new ChatServiceClient(
   "http://localhost:9090",
@@ -39,10 +39,56 @@ const useChat = () => {
     })
   },[])
 
+  const sendMsg = useCallback((id,message)=>{
+    console.log(id)
+    const date = new Date()
+    const data = new SendMessageRequest()
+    data.setFriendid(id);
+    data.setMyid(user.id)
+    const msg = new Message()
+    msg.setBy(user.id)
+    msg.setName(user.username)
+    msg.setMessage(message)
+    msg.setTime(date.toLocaleString())
+    data.setMessage(msg)
+    
+    chatClient.sendMessage(data,null,(err,res)=>{
+      console.log(res)
+    })
+
+  },[])
+
+  const [msgArr,setMsgArr] = useState([])
+  const getMsg = useCallback((userID,friendID)=>{
+    setMsgArr([])
+    const data = new GetChatRequest();
+    data.setUser1(userID);
+    data.setUser2(friendID);
+    const chatStream = chatClient.getChat(data,{});
+    console.log(chatStream)
+    chatStream.on("data", (response) => {
+      console.log()
+      setMsgArr(msgArr => [...msgArr, response.toObject().msg])
+    });
+
+    chatStream.on("status", function (status) {
+      console.log(status.code, status.details, status.metadata);
+    });
+
+    chatStream.on("end", () => {
+      console.log("Stream ended.");
+    });
+
+
+  },[])
+
   return {
     startChat,
     getChatList,
-    chats
+    chats,
+    sendMsg,
+    getMsg,
+    msgArr
   };
 };
 
