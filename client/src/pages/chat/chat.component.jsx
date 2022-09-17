@@ -16,7 +16,8 @@ import useChat from '../../hooks/useChat'
 const Chat = () => {
   const { user } = useAuth();
   const {startChat,getChatList,chats,sendMsg,getMsg,
-    msgArr} = useChat()
+    msgArr,
+    changed} = useChat()
   const [currentChat, setCurrentChat] = useState(null);
   const [msg,setMsg] = useState();
   const selectFriend = (friend) => {
@@ -25,12 +26,15 @@ const Chat = () => {
 
   useEffect(() => {
     getChatList(user.id)
-  }, [])
+    if(currentChat!=null){
+          }
+          getMsg(user?.id,currentChat?.id)
+  }, [changed,currentChat])
 
   // useEffect(() => {
-      // if(currentChat!=null){
-      // }
-      // getMsg(user?.id,currentChat?.id)
+  //     if(currentChat!=null){
+  //     }
+  //     getMsg(user?.id,currentChat?.id)
   // }, [currentChat])
   
 
@@ -60,7 +64,6 @@ const Chat = () => {
             <UserOverview
               onClick={() => {
                 selectFriend(friend);
-                getMsg(user?.id,friend?.id)
               }}
               selected={currentChat != null && friend.id == currentChat.id}
             >
@@ -101,8 +104,12 @@ const Chat = () => {
                 {
                   msgArr?.map((msg)=>{
                     return(
-                      <Box>
-                        {msg.message}
+                      <Box width={"fit-content"} backgroundColor={msg.name===currentChat.name?"#ececec":"#109ece"} margin={"10px"} padding={"10px"} borderRadius={"5px"} >
+                      <Typography fontWeight={"bold"} >{msg.message}</Typography>
+                      
+                      <Typography fontSize={"12px"} textAlign={'right'} >{msg.time}</Typography>
+                        
+            
                         </Box>
                       )
                     })

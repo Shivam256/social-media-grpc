@@ -19,7 +19,7 @@ const useChat = () => {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const { user } = useAuth();
-
+  const [changed,setChanged] = useState();
   const [chats,setChats] = useState();
 
   const startChat = useCallback((id) => {
@@ -29,14 +29,18 @@ const useChat = () => {
     chatClient.createchat(data,null,(err,res)=>{
         console.log(res)
     })
+    setChanged(!changed)
   }, []);
 
   const getChatList = useCallback((id)=>{
     const data = new ChatListRequest();
     data.setMyid(id);
     chatClient.getMyChatList(data,null,(err,res)=>{
+      console.log(res.toObject().listList)
       setChats(res.toObject().listList)
     })
+    setChanged(!changed)
+
   },[])
 
   const sendMsg = useCallback((id,message)=>{
@@ -55,6 +59,8 @@ const useChat = () => {
     chatClient.sendMessage(data,null,(err,res)=>{
       console.log(res)
     })
+    setChanged(!changed)
+
 
   },[])
 
@@ -88,7 +94,8 @@ const useChat = () => {
     chats,
     sendMsg,
     getMsg,
-    msgArr
+    msgArr,
+    changed
   };
 };
 

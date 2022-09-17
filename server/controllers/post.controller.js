@@ -45,7 +45,7 @@ export const deletePost = async (call, callback) => {
 
 export const addComment = async (call, callback) => {
   const { message, postId, user } = call.request.comment;
-  console.log(call.request, 'dfvdfvdfv');
+  // console.log(call.request, 'dfvdfvdfv');
   //   console.log(postId);
   try {
     const post = await Post.findById(postId);

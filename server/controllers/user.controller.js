@@ -3,11 +3,11 @@ import User from "../models/user.model.js";
 export const getUserInfo = async (call, callback) => {
   try {
     const data = call.request;
-    console.log(data);
+    // console.log(data);
     const { userid } = call.request;
 
     const user = await User.findById(userid).populate("friends");
-    console.log(user, "hehehe");
+    // console.log(user, "hehehe");
 
     if (!user) throw new Error("The user does not exist!");
 
@@ -28,9 +28,9 @@ export const getUserInfo = async (call, callback) => {
 export const getUsers = async (call, callback) => {
   try {
     const users = await User.find({});
-    console.log(users,"here i am");
+    // console.log(users,"here i am");
 
-    console.log(users);
+    // console.log(users);
 
     callback(null, {
       error: 0,

@@ -9,7 +9,7 @@ const { isLoggedIn } = grpcHelpers.middlewares(User, "thisIsNiceSecrettt");
 export const addFriend = async (call, callback) => {
   try {
     const data = call.request;
-    console.log(data);
+    // console.log(data);
     const { userid, tofriendid, note } = call.request;
 
     const userToFriend = await User.findById(tofriendid);

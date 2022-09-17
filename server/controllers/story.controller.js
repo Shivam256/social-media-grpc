@@ -21,7 +21,7 @@ export const addStory = async (call, callback) => {
 export const getStories = async (call, callback) => {
   try {
     const stories = await Story.find({}).populate('userId');
-    console.log(stories);
+    // console.log(stories);
     const res = stories.map((story) => {
       return {
         storyId: story._id.valueOf(),
@@ -34,7 +34,7 @@ export const getStories = async (call, callback) => {
         imageLink: story.imageLink,
       };
     });
-    console.log(res);
+    // console.log(res);
     callback(null, { allStories: res });
   } catch (e) {
     console.log(e);
